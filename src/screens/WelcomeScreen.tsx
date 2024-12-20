@@ -37,7 +37,7 @@ const WelcomeScreen = ({
           <View className="items-center mt-40">
             <ReusableButton
               text="Get Started"
-              onPress={() => navigation.navigate('Login')}
+              onPress={() => navigation.navigate('Tabs')}
               style="w-60 bg-black"
               textStyle="text-white"
             />

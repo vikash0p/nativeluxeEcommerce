@@ -1,11 +1,16 @@
-import {View, Text} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import React from 'react';
+import HomeTopBar from '../components/HomeComponents/HomeTopBar';
+import HomeCategory from '../components/HomeComponents/HomeCategory';
+import HomeCarousel from '../components/HomeComponents/HomeCarousel';
 
 const HomeScreen = () => {
   return (
-    <View>
-      <Text>HomeScreen</Text>
-    </View>
+    <SafeAreaView>
+      <HomeTopBar />
+      <HomeCategory />
+      <HomeCarousel />
+    </SafeAreaView>
   );
 };
 

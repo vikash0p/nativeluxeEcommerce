@@ -63,7 +63,7 @@ const RegisterScreen = ({
       <View className="flex-row items-center justify-center gap-5 ">
         <View className="w-[105px] h-px bg-[#bdbdbd] rounded-sm" />
         <Image
-          source={{uri: 'https://via.placeholder.com/100'}}
+          source={require('../asset/images/Group.png')}
           className="w-20 h-20 mb-4 rounded-full"
         />
         <View className="w-[105px] h-px bg-[#bdbdbd] rounded-sm" />

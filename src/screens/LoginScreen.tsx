@@ -52,8 +52,8 @@ const LoginScreen = ({navigation}: {navigation: LoginScreenNavigationProp}) => {
       <View className="flex-row items-center justify-center gap-5 mt-12">
         <View className="w-[105px] h-px bg-[#bdbdbd] rounded-sm" />
         <Image
-          source={{uri: 'https://via.placeholder.com/100'}}
-          className="w-20 h-20 mb-4 rounded-full"
+          source={require('../asset/images/Group.png')}
+          className="object-cover w-20 h-20 mb-4 rounded-full"
         />
         <View className="w-[105px] h-px bg-[#bdbdbd] rounded-sm" />
       </View>
