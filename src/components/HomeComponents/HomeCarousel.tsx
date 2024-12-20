@@ -49,7 +49,7 @@ const HomeCarousel: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} className="bg-white">
       <FlatList
         ref={flatListRef}
         data={carouselData}
