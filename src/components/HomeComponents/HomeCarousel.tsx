@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: width - 20,
-    height: 200,
+    height: 170,
     borderRadius: 10,
     marginHorizontal: 10,
   },

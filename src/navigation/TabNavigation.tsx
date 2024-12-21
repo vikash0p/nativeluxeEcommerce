@@ -1,30 +1,33 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/no-unstable-nested-components */
-import React from 'react';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
-import ContactScreen from '../screens/ContactScreen';
 import ProductScreen from '../screens/ProductScreen';
-import CartScreen from '../screens/CartScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
-import DrawerNavigation from './DrawerNavigation';
+import UserScreen from '../screens/UserScreen';
+import NotificationScreen from '../screens/NotificationScreen';
+import FavoriteScreen from '../screens/FavoriteScreen';
 
 const Tabs = createBottomTabNavigator();
 
 const TabNavigation = () => {
+  const [cartItemCount, setCartItemCount] = useState(3); // Example cart item count
+  const [unreadNotifications, setUnreadNotifications] = useState(5); // Example notification count
+
   return (
     <Tabs.Navigator
       screenOptions={({route}) => ({
-        // Tab bar common options
         headerShown: false,
         tabBarShowLabel: true,
+        tabBarLabelStyle: styles.tabBarLabelStyle,
         tabBarActiveTintColor: '#4f46e5',
         tabBarInactiveTintColor: 'gray',
-        tabBarStyle: {backgroundColor: '#ffffff'},
+        tabBarStyle: styles.tabBarStyle,
 
-        // Dynamic Tab Bar Icon
         tabBarIcon: ({focused, color, size}) => {
-          let iconName: string;
-
+          let iconName;
           switch (route.name) {
             case 'Home':
               iconName = focused ? 'home' : 'home-outline';
@@ -32,30 +35,95 @@ const TabNavigation = () => {
             case 'Product':
               iconName = focused ? 'pricetag' : 'pricetag-outline';
               break;
+            case 'Favorite':
+              iconName = focused ? 'heart' : 'heart-outline';
+              break;
             case 'Cart':
               iconName = focused ? 'cart' : 'cart-outline';
               break;
-            case 'Contact':
-              iconName = focused ? 'call' : 'call-outline';
+            case 'Notification':
+              iconName = focused ? 'notifications' : 'notifications-outline';
               break;
-            case 'Drawer':
+            case 'User':
               iconName = focused ? 'person' : 'person-outline';
               break;
             default:
-              iconName = 'help-circle-outline'; // Fallback for undefined routes
+              iconName = 'help-circle-outline';
           }
-
-          return <Icon name={iconName} size={size} color={color} />;
+          return (
+            <View style={styles.iconContainer}>
+              <Icon name={iconName} size={size} color={color} />
+              {/* Badge for Cart Tab */}
+              {route.name === 'Cart' && cartItemCount > 0 && (
+                <View style={styles.badgeContainer}>
+                  <Text style={styles.badgeText}>{cartItemCount}</Text>
+                </View>
+              )}
+              {/* Badge for Notification Tab */}
+              {route.name === 'Notification' && unreadNotifications > 0 && (
+                <View style={styles.badgeContainer}>
+                  <Text style={styles.badgeText}>{unreadNotifications}</Text>
+                </View>
+              )}
+            </View>
+          );
         },
       })}>
-      {/* Tabs with Icons */}
       <Tabs.Screen name="Home" component={HomeScreen} />
-      <Tabs.Screen name="Product" component={ProductScreen} />
-      <Tabs.Screen name="Cart" component={CartScreen} />
-      <Tabs.Screen name="Contact" component={ContactScreen} />
-      <Tabs.Screen name="Drawer" component={DrawerNavigation} options={{}} />
+      <Tabs.Screen
+        name="Product"
+        component={ProductScreen}
+        options={{tabBarLabel: 'Products'}}
+
+
+      />
+      <Tabs.Screen name="Favorite" component={FavoriteScreen} />
+      <Tabs.Screen name="Notification" component={NotificationScreen} />
+      <Tabs.Screen name="User" component={UserScreen} />
     </Tabs.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  tabBarStyle: {
+    backgroundColor: '#f8f9fa',
+    borderTopWidth: 1,
+    borderTopColor: '#d1d5db',
+    paddingBottom: 8,
+    height: 70,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  tabBarLabelStyle: {
+    fontSize: 12,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  iconContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  badgeContainer: {
+    position: 'absolute',
+    right: -10,
+    top: -4,
+    backgroundColor: '#4f46e5',
+    borderRadius: 10,
+    width: 18,
+    height: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ffffff',
+  },
+  badgeText: {
+    color: '#ffffff',
+    fontSize: 10,
+    fontWeight: 'bold',
+  },
+});
 
 export default TabNavigation;

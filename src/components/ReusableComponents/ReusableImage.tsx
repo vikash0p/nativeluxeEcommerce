@@ -1,46 +1,26 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
-import {ActivityIndicator, Image, ImageProps, View} from 'react-native';
-
-interface ImageComponentProps extends ImageProps {
-  loaderColor?: string; // Color for the loading indicator
-  className?: string; // Tailwind classes for the image
-  placeholderClassName?: string; // Tailwind classes for the placeholder
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import React from 'react';
+import {View, Image, TouchableOpacity, ImageSourcePropType} from 'react-native';
+import {RootStackParamList} from '../../utils/types/navigationTypes';
+interface ReusableImageProps {
+  source: ImageSourcePropType;
+  styles: string;
 }
 
-const ReusableImage: React.FC<ImageComponentProps> = ({
-  loaderColor = 'gray',
-  className,
-  placeholderClassName,
-  onLoad,
-  ...props
-}) => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  const handleLoad = (event: any) => {
-    setIsLoading(false);
-    if (onLoad) {
-      onLoad(event); // Call any provided `onLoad` prop
-    }
-  };
-
+const ReusableImage: React.FC<ReusableImageProps> = ({source, styles}) => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
-    <View className={`relative bg-white  ${placeholderClassName || ''}`}>
-      {isLoading && (
-        <ActivityIndicator
-          size="small"
-          color={loaderColor}
-          style={{position: 'relative', alignSelf: 'center', top: '60%'}}
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={() => navigation.navigate('Register')}>
+      <View className="px-1 bg-white">
+        <Image
+          source={source}
+          className={`object-cover  ${styles}`}
+          resizeMode="cover"
         />
-      )}
-      <Image
-        {...props}
-        className={`${className || ''} ${
-          isLoading ? 'opacity-0' : 'opacity-100'
-        }`}
-        onLoad={handleLoad}
-      />
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 

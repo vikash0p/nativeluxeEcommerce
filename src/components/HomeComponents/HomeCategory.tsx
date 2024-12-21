@@ -43,16 +43,20 @@ const HomeCategory = () => {
 
     return (
       <View className="items-center">
-        <TouchableOpacity className="items-center justify-center px-3 py-2 m-2 bg-gray-200 rounded-lg shadow-sm ">
+        <TouchableOpacity
+          onPress={() => console.log('Category selected: ', item.name)}
+          activeOpacity={0.8}
+          
+         className="items-center justify-center px-3 py-2 m-2 bg-[#4f46e5] text- rounded-lg shadow-sm ">
           {/* Category Icon */}
           <IconComponent
             name={item.icon}
             size={28}
-            color="#232323"
+            color="#fff"
             style={{marginBottom: 8}}
           />
-        </TouchableOpacity>
-        <Text className="text-lg font-semibold text-[#232323]">
+        </TouchableOpacity  >
+        <Text className="text-lg font-semibold text-[#4f46e5]">
           {item.name}
         </Text>
       </View>

@@ -1,31 +1,30 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Ensure react-native-vector-icons is installed
-
-const HomeTopBar = () => {
+import {View, TextInput, TouchableOpacity, Text} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {NavigationProp} from '@react-navigation/native';
+import {RootStackParamList}from '../../utils/types/navigationTypes';
+const HomeTopBar: React.FC<{ navigation: NavigationProp<RootStackParamList>}> = ({navigation}) => {
   return (
     <View className="flex-row items-center justify-between p-4 bg-white shadow-md">
       {/* Search Bar with Icon */}
-      <View className="">
-        <TouchableOpacity>
-        <Icon name="search-outline" size={24} color="#232323" />
-        </TouchableOpacity>
+      <View className="flex-row items-center flex-1 bg-gray-300 rounded-full px-3">
+        <Icon name="search-outline" size={20} color="black" />
+        <TextInput
+          className="flex-1 ml-2 text-gray-700"
+          placeholder="Search"
+          placeholderTextColor="black"
+        />
       </View>
 
-      {/* Centered Text */}
-      <View className="items-center flex-2">
-        <Text className="text-lg font-normal text-[#909090] font-Gelasio leading-6">
-          Make home
-        </Text>
-        <Text className="text-lg font-bold text-[#232323] font-Gelasio leading-6">
-          BEAUTIFUL
-        </Text>
+      {/* Cart Icon with Red Badge */}
+      <View className="relative p-2 ml-4">
+        <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+          <Icon name="cart-outline" size={24} color="#232323" />
+        </TouchableOpacity  >
+        <View className="absolute -top-1 -right-2 bg-[#4f46e5] rounded-full w-5 h-5 flex items-center justify-center">
+          <Text className="text-white text-xs">3</Text>
+        </View>
       </View>
-
-      {/* Cart Icon */}
-      <TouchableOpacity className="p-2 ml-2">
-        <Icon name="cart-outline" size={24} color="#232323" />
-      </TouchableOpacity>
     </View>
   );
 };
