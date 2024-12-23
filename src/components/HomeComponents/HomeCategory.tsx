@@ -16,7 +16,12 @@ interface Category {
 
 // Categories data
 const categories: Category[] = [
-  {id: '1', name: 'Dressing', iconSet: 'Ionicons', icon: 'shirt-outline'},
+  {
+    id: '1',
+    name: 'dressing',
+    iconSet: 'MaterialCommunityIcons',
+    icon: 'dresser-outline',
+  },
   {id: '2', name: 'Dining', iconSet: 'Ionicons', icon: 'restaurant-outline'},
   {
     id: '4',
@@ -33,8 +38,8 @@ const HomeCategory = () => {
   const renderItem = ({item}: {item: Category}) => {
     // Declare IconComponent and set it conditionally
     let IconComponent: React.ComponentType<any> = Ionicons; // Default to Ionicons
-    if (item.iconSet === 'Ionicons') {
-      IconComponent = Ionicons;
+    if (item.iconSet === 'MaterialCommunityIcons') {
+      IconComponent = MaterialCommunityIcons;
     } else if (item.iconSet === 'MaterialIcons') {
       IconComponent = MaterialIcons;
     } else if (item.iconSet === 'MaterialCommunityIcons') {
@@ -46,7 +51,7 @@ const HomeCategory = () => {
         <TouchableOpacity
           onPress={() => console.log('Category selected: ', item.name)}
           activeOpacity={0.8}
-          
+
          className="items-center justify-center px-3 py-2 m-2 bg-[#4f46e5] text- rounded-lg shadow-sm ">
           {/* Category Icon */}
           <IconComponent

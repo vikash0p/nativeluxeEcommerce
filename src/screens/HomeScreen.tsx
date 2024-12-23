@@ -18,13 +18,15 @@ const HomeScreen: React.FC<{navigation: TabsScreenNavigationProp}> = ({
       <HomeCategory />
       <View>
         <ReusableImage
-          source={{
-            uri: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y29sb3J8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-          }}
-          styles="w-full h-40 rounded-md"
+          image={require('../asset/images/banner/banner16.jpg')}
+          styles="w-full h-24 rounded-md"
+          navigation={() => navigation.navigate('Register')}
+        />
+        <ReusableImage
+          image={require('../asset/images/banner/banner17.jpg')}
+          styles="w-full h-24 rounded-md"
         />
       </View>
-
       <HomeCollection />
     </SafeAreaView>
   );

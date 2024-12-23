@@ -1,24 +1,21 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {View, Image, TouchableOpacity, ImageSourcePropType} from 'react-native';
-import {RootStackParamList} from '../../utils/types/navigationTypes';
+import {View, Image, TouchableOpacity} from 'react-native';
+
 interface ReusableImageProps {
-  source: ImageSourcePropType;
-  styles: string;
+  image: any; // Allows both local `require` and remote URI strings
+  styles?: string; // Tailwind class strings
+  navigation?: () => void; // Optional navigation callback
 }
 
-const ReusableImage: React.FC<ReusableImageProps> = ({source, styles}) => {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+const ReusableImage: React.FC<ReusableImageProps> = ({
+  styles,
+  image,
+  navigation,
+}) => {
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={() => navigation.navigate('Register')}>
-      <View className="px-1 bg-white">
-        <Image
-          source={source}
-          className={`object-cover  ${styles}`}
-          resizeMode="cover"
-        />
+    <TouchableOpacity activeOpacity={0.8} onPress={navigation}>
+      <View className="px-1 bg-white rounded-md">
+        <Image source={image} className={` ${styles}`} resizeMode="contain" />
       </View>
     </TouchableOpacity>
   );
