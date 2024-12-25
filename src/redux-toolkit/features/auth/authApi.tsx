@@ -1,12 +1,13 @@
 // src/features/api/authApi.js
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 
-export const authApi = createApi({
+const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://backend-house.vercel.app/auth', // Replace with your backend URL
-    credentials: 'include', // Ensure cookies are included for token-based auth
+    baseUrl: 'https://backend-house.vercel.app/auth',
+    credentials: 'include',
   }),
+  tagTypes: ['Auth'],
   endpoints: builder => ({
     registerUser: builder.mutation({
       query: userData => ({
@@ -14,6 +15,7 @@ export const authApi = createApi({
         method: 'POST',
         body: userData,
       }),
+      invalidatesTags: ['Auth'],
     }),
     loginUser: builder.mutation({
       query: credentials => ({
@@ -21,21 +23,26 @@ export const authApi = createApi({
         method: 'POST',
         body: credentials,
       }),
+      invalidatesTags: ['Auth'],
     }),
     logoutUser: builder.mutation({
       query: () => ({
         url: '/logout',
         method: 'DELETE',
       }),
+      invalidatesTags: ['Auth'],
     }),
     getUserDetails: builder.query({
       query: () => ({
         url: '/getUserDetails',
         method: 'GET',
       }),
+      providesTags: ['Auth'],
     }),
   }),
 });
+
+export default authApi;
 
 export const {
   useRegisterUserMutation,

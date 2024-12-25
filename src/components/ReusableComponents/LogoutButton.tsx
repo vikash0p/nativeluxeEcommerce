@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
-import {useLogoutUserMutation} from '../../redux-toolkit/api/authApi';
+import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {useLogoutUserMutation} from '../../redux-toolkit/features/auth/authApi';
 import {useAppDispatch} from '../../redux-toolkit/hooks';
 import {logout as logoutAction} from '../../redux-toolkit/features/auth/authSlice';
 import {useNavigation} from '@react-navigation/native';

@@ -1,7 +1,7 @@
 import {View, Text, Modal, TouchableOpacity, ScrollView} from 'react-native';
 import React from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import ReusableCheckbox from '../ReusableComponents/ReusableCheckbox';
+import CategoryFilter from "../Filters/CategoryFilter";
 
 interface ProductFilterModelProps {
   isFilterModalVisible: boolean;
@@ -31,32 +31,12 @@ const ProductFilterModel: React.FC<ProductFilterModelProps> = ({
           </View>
 
           {/* Scrollable Content Section */}
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled>
             <View className="space-y-4">
               <View className="flex-col gap-2  ">
-                <Text className="text-2xl font-bold font-serif">Option 1</Text>
-                <ReusableCheckbox />
+                <CategoryFilter />
               </View>
-              <View className="flex-col gap-2  ">
-                <Text className="text-2xl font-bold font-serif">Option 2</Text>
-                <ReusableCheckbox />
-              </View>
-              <View className="flex-col gap-2  ">
-                <Text className="text-2xl font-bold font-serif">Option 3</Text>
-                <ReusableCheckbox />
-              </View>
-              <View className="flex-col gap-2  ">
-                <Text className="text-2xl font-bold font-serif">Option 4</Text>
-                <ReusableCheckbox />
-              </View>
-              <View className="flex-col gap-2  ">
-                <Text className="text-2xl font-bold font-serif">Option 5</Text>
-                <ReusableCheckbox />
-              </View>
-              <View className="flex-col gap-2  ">
-                <Text className="text-2xl font-bold font-serif">Option 6</Text>
-                <ReusableCheckbox />
-              </View>
+
               {/* Add more options as needed */}
             </View>
           </ScrollView>

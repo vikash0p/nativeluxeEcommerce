@@ -8,7 +8,7 @@ import {
   StatusBar,
   Image,
 } from 'react-native';
-import {useLoginUserMutation} from '../redux-toolkit/api/authApi';
+import {useLoginUserMutation} from '../redux-toolkit/features/auth/authApi';
 import {LoginScreenNavigationProp} from '../utils/types/navigationTypes';
 import {Toast} from 'toastify-react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -21,12 +21,12 @@ const LoginScreen = ({navigation}: {navigation: LoginScreenNavigationProp}) => {
   const [loginUser, {isLoading}] = useLoginUserMutation();
 
   const handleLogin = async () => {
-        const {email, password} = credentials;
+    const {email, password} = credentials;
 
-        if (!email || !password) {
-          Toast.error('Please fill out all fields');
-          return;
-        }
+    if (!email || !password) {
+      Toast.error('Please fill out all fields');
+      return;
+    }
     try {
       const response = await loginUser(credentials).unwrap();
       console.log('🚀 ~ file: LoginScreen.tsx:12 ~ response:', response);

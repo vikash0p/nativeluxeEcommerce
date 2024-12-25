@@ -11,7 +11,7 @@ import BlogScreen from '../screens/BlogScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {View, Text, Image} from 'react-native';
 import LogoutButton from '../components/ReusableComponents/LogoutButton';
-import {useGetUserDetailsQuery} from '../redux-toolkit/api/authApi';
+import {useGetUserDetailsQuery} from '../redux-toolkit/features/auth/authApi';
 
 const Drawer = createDrawerNavigator();
 
@@ -76,7 +76,9 @@ const DrawerNavigation = () => {
           return <Icon name={iconName} size={size} color={color} />;
         },
       })}
-      drawerContent={props => <CustomDrawerContent {...props} user={data?.result} />}>
+      drawerContent={props => (
+        <CustomDrawerContent {...props} user={data?.result} />
+      )}>
       <Drawer.Screen name="User" component={UserScreen} />
       <Drawer.Screen name="About" component={AboutScreen} />
       <Drawer.Screen name="Blog" component={BlogScreen} />
