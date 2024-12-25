@@ -1,12 +1,14 @@
 import React from 'react';
-import {View, Text, Image, ScrollView, ActivityIndicator} from 'react-native';
+import {View, Text, ScrollView, ActivityIndicator} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LogoutButton from '../components/ReusableComponents/LogoutButton';
 import {useAppSelector} from '../redux-toolkit/hooks';
 import {RootState} from '../redux-toolkit/store';
 
 const UserScreen = () => {
-  const {user, isAuthenticated, loading} = useAppSelector((state: RootState) => state.auth);
+  const {user, isAuthenticated, loading} = useAppSelector(
+    (state: RootState) => state.auth,
+  );
 
   if (loading) {
     return (
@@ -28,26 +30,21 @@ const UserScreen = () => {
   }
 
   return (
-    <ScrollView className="flex-1 px-6 py-4 bg-gray-100">
+    <ScrollView className="flex-1 px-6 py-4 bg-gray-100 space-y-2">
       {/* Profile Header */}
       <View className="items-center p-6 mb-4 bg-white shadow-md rounded-2xl">
-        <Image
-          accessibilityLabel="User profile picture"
-          source={{
-            uri:  'https://via.placeholder.com/150',
-          }}
-          className="mb-4 rounded-full w-28 h-28"
-        />
-        <Text className="text-2xl font-bold text-gray-800">
+        <View className="w-24 h-24 bg-[#4f46e5] rounded-full flex items-center justify-center">
+          <Icon name="person" size={32} color="white" />
+        </View>
+
+        <Text className="text-2xl font-bold text-gray-800  ">
           {user?.name || 'Guest User'}
         </Text>
         <Text className="text-sm text-gray-600">{user?.email}</Text>
-        {user?.phone && (
-          <View className="flex-row items-center mt-2">
-            <Icon name="call" size={16} color="#4f46e5" />
-            <Text className="ml-2 text-sm text-gray-600">{user.phone}</Text>
-          </View>
-        )}
+        <View className="flex-row items-center ">
+          <Icon name="call" size={12} color="#4f46e5" />
+          <Text className=" text-sm text-gray-600">{user?.phone}</Text>
+        </View>
       </View>
 
       {/* User Details */}
