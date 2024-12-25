@@ -1,21 +1,27 @@
 import React from 'react';
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image, ScrollView, ActivityIndicator} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LogoutButton from '../components/ReusableComponents/LogoutButton';
 import {useAppSelector} from '../redux-toolkit/hooks';
 import {RootState} from '../redux-toolkit/store';
 
 const UserScreen = () => {
-  const {user, isAuthenticated} = useAppSelector(
-    (state: RootState) => state.auth,
-  );
-  console.log('🚀 ~ file: UserScreen.tsx:10 ~ user:', user);
+  const {user, isAuthenticated, loading} = useAppSelector((state: RootState) => state.auth);
+
+  if (loading) {
+    return (
+      <View className="flex-1 items-center justify-center bg-gray-100">
+        <ActivityIndicator size="large" color="#4f46e5" />
+        <Text className="mt-4 text-lg text-gray-600">Loading profile...</Text>
+      </View>
+    );
+  }
 
   if (!isAuthenticated) {
     return (
       <View className="flex-1 items-center justify-center bg-gray-100">
         <Text className="text-lg font-bold text-gray-800">
-          Please log in to view your profile
+          Please log in to view your profile.
         </Text>
       </View>
     );
@@ -28,7 +34,7 @@ const UserScreen = () => {
         <Image
           accessibilityLabel="User profile picture"
           source={{
-            uri: 'https://via.placeholder.com/150',
+            uri:  'https://via.placeholder.com/150',
           }}
           className="mb-4 rounded-full w-28 h-28"
         />
