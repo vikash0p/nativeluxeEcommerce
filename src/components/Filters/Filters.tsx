@@ -11,7 +11,7 @@ const Filters = () => {
   const {params} = useAppSelector((state: RootState) => state.productQuery);
 
   return (
-    <View>
+    <View className=" flex-1 flex-col gap-y-8 mb-20 ">
       {/* category */}
       <ReusableFilters
         data={categories}
