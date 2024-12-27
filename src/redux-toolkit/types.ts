@@ -47,6 +47,7 @@ export interface ProductQueryParams {
   minPrice?: number;
   maxPrice?: number;
   minRating?: number;
+  discount?: number;
   category?: string[];
   brand?: string[];
   material?: string[];
