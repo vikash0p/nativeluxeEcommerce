@@ -56,7 +56,7 @@ const Pagination = () => {
                 <TouchableOpacity
                   key={page}
                   className={`${
-                    isActive ? 'bg-blue-500' : 'bg-gray-200'
+                    isActive ? 'bg-[#4f46e5]' : 'bg-gray-200'
                   } p-2 m-1 rounded-sm flex items-center justify-center w-10`}
                   onPress={() => handlePageChange(page)}>
                   <Text className={`${isActive ? 'text-white' : 'text-black'}`}>
