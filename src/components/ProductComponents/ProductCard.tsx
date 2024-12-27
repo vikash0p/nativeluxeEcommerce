@@ -12,7 +12,7 @@ const ProductCard: React.FC<{item: Product}> = ({item}) => {
       />
       <Text className="text-sm font-bold mt-2 text-gray-800">{item.title}</Text>
       <Text className="text-xs text-gray-500 mt-1">{item.category}</Text>
-      <Text className="text-sm font-semibold text-teal-600 mt-1">
+      <Text className="text-sm font-semibold text-[#4f46e5] mt-1">
         ${item.finalPrice.toFixed(2)}
       </Text>
       {item.discount > 0 && (
