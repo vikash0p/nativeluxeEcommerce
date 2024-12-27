@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, ImageBackground, StatusBar} from 'react-native';
+import {View, Text, ImageBackground} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context'; // Ensure safe area padding
 import {WelcomeScreenNavigationProp} from '../utils/types/navigationTypes';
 import ReusableButton from '../components/ReusableComponents/ReusableButton';
@@ -11,10 +11,7 @@ const WelcomeScreen = ({
 }) => {
   return (
     <SafeAreaView className="flex-1 bg-white">
-      {/* Status Bar Configuration */}
-      <StatusBar
-        hidden
-      />
+
 
       <ImageBackground
         source={require('../asset/images/welcome.png')} // Replace with your background image
@@ -37,7 +34,7 @@ const WelcomeScreen = ({
           <View className="items-center mt-40">
             <ReusableButton
               text="Get Started"
-              onPress={() => navigation.navigate('Login')}
+              onPress={() => navigation.navigate('Tabs')}
               style="w-60 bg-black"
               textStyle="text-white"
             />

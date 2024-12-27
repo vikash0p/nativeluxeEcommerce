@@ -5,7 +5,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StatusBar,
   Image,
 } from 'react-native';
 import {useLoginUserMutation} from '../redux-toolkit/features/auth/authApi';
@@ -42,11 +41,6 @@ const LoginScreen = ({navigation}: {navigation: LoginScreenNavigationProp}) => {
 
   return (
     <SafeAreaView className="flex-1 p-8 bg-gray-100">
-      <StatusBar
-        translucent
-        backgroundColor="transparent"
-        barStyle="dark-content"
-      />
 
       {/* Header with Logo and Title */}
       <View className="flex-row items-center justify-center gap-5 mt-12">

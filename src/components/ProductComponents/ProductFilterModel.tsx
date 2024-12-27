@@ -1,23 +1,39 @@
 import {View, Text, Modal, TouchableOpacity, ScrollView} from 'react-native';
 import React from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import CategoryFilter from "../Filters/CategoryFilter";
+import {useDispatch} from 'react-redux';
+import {
+  applyFilters,
+  resetParams,
+} from '../../redux-toolkit/features/products/productQuerySlice';
+import Filters from '../Filters/Filters';
 
 interface ProductFilterModelProps {
-  isFilterModalVisible: boolean;
-  setIsFilterModalVisible: (value: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
 }
 
 const ProductFilterModel: React.FC<ProductFilterModelProps> = ({
-  isFilterModalVisible,
-  setIsFilterModalVisible,
+  isOpen,
+  setIsOpen,
 }) => {
+  const dispatch = useDispatch();
+  const handleApplyFilters = () => {
+    dispatch(applyFilters()); // Apply filters
+    setIsOpen(false); // Close the modal
+  };
+
+  const handleResetFilters = () => {
+    dispatch(resetParams()); // Reset filter parameters
+    setIsOpen(false); // Close the modal
+  };
+
   return (
     <Modal
-      visible={isFilterModalVisible}
+      visible={isOpen}
       animationType="slide"
       transparent={true}
-      onRequestClose={() => setIsFilterModalVisible(false)}>
+      onRequestClose={() => setIsOpen(false)}>
       <View className="flex-1 bg-gray-500/50 justify-end">
         <View className="bg-white rounded-t-2xl p-6 shadow-lg max-h-[90%]">
           {/* Header Section */}
@@ -25,30 +41,37 @@ const ProductFilterModel: React.FC<ProductFilterModelProps> = ({
             <Text className="text-xl font-bold text-gray-800">
               Filter Products
             </Text>
-            <TouchableOpacity onPress={() => setIsFilterModalVisible(false)}>
+            <TouchableOpacity onPress={() => setIsOpen(false)}>
               <AntDesign name="close" size={24} color="black" />
             </TouchableOpacity>
           </View>
 
           {/* Scrollable Content Section */}
-          <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled>
+          <ScrollView className="mb-24">
             <View className="space-y-4">
-              <View className="flex-col gap-2  ">
-                <CategoryFilter />
+              <View className="flex-col gap-2">
+                <Filters />
               </View>
-
-              {/* Add more options as needed */}
             </View>
           </ScrollView>
 
-          {/* Apply Button */}
-          <TouchableOpacity
-            onPress={() => setIsFilterModalVisible(false)}
-            className="mt-6 bg-blue-500 rounded-lg py-3">
-            <Text className="text-center text-white text-lg font-semibold">
-              Apply Filters
-            </Text>
-          </TouchableOpacity>
+          {/* Fixed Bottom Buttons */}
+          <View className="absolute bottom-0 left-0 right-0 bg-white p-4">
+            <TouchableOpacity
+              onPress={handleApplyFilters}
+              className="mb-3 bg-[#4f46e5] rounded-lg py-3">
+              <Text className="text-center text-white text-lg font-semibold">
+                Apply Filters
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={handleResetFilters}
+              className="bg-red-500 rounded-lg py-3">
+              <Text className="text-center text-white text-lg font-semibold">
+                Reset Filters
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>
