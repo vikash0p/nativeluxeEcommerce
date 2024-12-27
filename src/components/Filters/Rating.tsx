@@ -31,6 +31,7 @@ const Rating = () => {
           />
           <View className="flex-row items-center ml-2">
             <StarRating rating={item} />
+            <Text className="text-xl">& up</Text>
           </View>
         </View>
       ))}

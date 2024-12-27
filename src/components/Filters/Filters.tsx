@@ -12,6 +12,7 @@ import {RootState} from '../../redux-toolkit/store';
 import {toggleFilter} from '../../redux-toolkit/features/products/productQuerySlice';
 import Rating from './Rating';
 import Discount from './Discount';
+import Price from './Price';
 
 const Filters = () => {
   const dispatch = useAppDispatch();
@@ -20,6 +21,7 @@ const Filters = () => {
 
   return (
     <View className=" flex-1 flex-col gap-y-8 mb-20 ">
+      <Price />
       {/* category */}
       <ReusableFilters
         data={categories}
