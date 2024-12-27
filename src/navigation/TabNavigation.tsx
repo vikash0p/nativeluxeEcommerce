@@ -13,7 +13,6 @@ import FavoriteScreen from '../screens/FavoriteScreen';
 const Tabs = createBottomTabNavigator();
 
 const TabNavigation = () => {
-  const [cartItemCount, setCartItemCount] = useState(3); // Example cart item count
   const [unreadNotifications, setUnreadNotifications] = useState(5); // Example notification count
 
   return (
@@ -38,9 +37,7 @@ const TabNavigation = () => {
             case 'Favorite':
               iconName = focused ? 'heart' : 'heart-outline';
               break;
-            case 'Cart':
-              iconName = focused ? 'cart' : 'cart-outline';
-              break;
+
             case 'Notification':
               iconName = focused ? 'notifications' : 'notifications-outline';
               break;
@@ -54,11 +51,7 @@ const TabNavigation = () => {
             <View style={styles.iconContainer}>
               <Icon name={iconName} size={size} color={color} />
               {/* Badge for Cart Tab */}
-              {route.name === 'Cart' && cartItemCount > 0 && (
-                <View style={styles.badgeContainer}>
-                  <Text style={styles.badgeText}>{cartItemCount}</Text>
-                </View>
-              )}
+
               {/* Badge for Notification Tab */}
               {route.name === 'Notification' && unreadNotifications > 0 && (
                 <View style={styles.badgeContainer}>
@@ -74,8 +67,6 @@ const TabNavigation = () => {
         name="Product"
         component={ProductScreen}
         options={{tabBarLabel: 'Products'}}
-
-
       />
       <Tabs.Screen name="Favorite" component={FavoriteScreen} />
       <Tabs.Screen name="Notification" component={NotificationScreen} />

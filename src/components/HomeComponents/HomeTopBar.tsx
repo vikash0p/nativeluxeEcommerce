@@ -1,25 +1,37 @@
 import React from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-
-import {NavigationProp} from '@react-navigation/native';
-import {RootStackParamList} from '../../utils/types/navigationTypes';
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types/navigationTypes';
 import Search from '../Filters/Search';
+
 const HomeTopBar: React.FC<{
   navigation: NavigationProp<RootStackParamList>;
-}> = ({navigation}) => {
+}> = ({ navigation }) => {
+  const cartItemCount = 3;
+
   return (
-    <View className="flex-row items-center justify-between p-4 bg-white shadow-md">
-        <Search />
+    <View className="w-screen flex-row items-center justify-between px-3 py-3 bg-[#4f46e5] shadow-md rounded-b-3xl">
+      {/* Search Component */}
+      <Search />
 
       {/* Cart Icon with Red Badge */}
-      <View className="relative p-2 ml-4">
-        <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
-          <Icon name="cart-outline" size={24} color="#232323" />
+      <View className="relative ">
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Cart')}
+          className="p-2"
+          accessibilityLabel="Cart"
+          accessibilityHint="Navigate to the cart page">
+          <Icon name="cart-outline" size={28} color="#fff" />
         </TouchableOpacity>
-        <View className="absolute -top-1 -right-2 bg-[#4f46e5] rounded-full w-5 h-5 flex items-center justify-center">
-          <Text className="text-white text-xs">3</Text>
-        </View>
+
+        {cartItemCount > 0 && (
+          <View className="absolute -top-2 -right-2 bg-white rounded-full w-6 h-6 items-center justify-center">
+            <Text className="text-[#4f46e5] text-xs font-bold">
+              {cartItemCount}
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   );

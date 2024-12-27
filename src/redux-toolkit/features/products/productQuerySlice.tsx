@@ -5,12 +5,14 @@ interface ProductQueryState {
   params: ProductQueryParams; // Temporary filter selections
   appliedFilters: ProductQueryParams; // Filters that are applied
   loading: boolean;
+  searchValue: string;
 }
 
 const initialState: ProductQueryState = {
   params: {}, // Represents current filter state before applying
   appliedFilters: {}, // Represents the confirmed applied filter state
   loading: false,
+  searchValue: '',
 };
 
 // Reusable utility function
@@ -24,6 +26,9 @@ const productQuerySlice = createSlice({
   name: 'productQuery',
   initialState,
   reducers: {
+    searchQuery: (state, action: PayloadAction<string>) => {
+      state.searchValue = action.payload;
+    },
     // Updates params with the provided filter values
     setParams: (state, action: PayloadAction<ProductQueryParams>) => {
       state.params = {...state.params, ...action.payload};
@@ -59,7 +64,7 @@ const productQuerySlice = createSlice({
   },
 });
 
-export const {setParams, resetParams, toggleFilter, applyFilters, setLoading} =
+export const {setParams, resetParams, toggleFilter, applyFilters, setLoading ,searchQuery} =
   productQuerySlice.actions;
 
 export default productQuerySlice.reducer;
