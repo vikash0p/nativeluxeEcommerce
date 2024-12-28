@@ -15,12 +15,11 @@ const initialState: ProductQueryState = {
   searchValue: '',
 };
 
-// Reusable utility function
-function toggleValueInArray<T>(array: T[], value: T): T[] {
-  return array.includes(value)
+// Utility function to toggle a value in an array
+const toggleValueInArray = <T,>(array: T[], value: T): T[] =>
+  array.includes(value)
     ? array.filter(item => item !== value)
     : [...array, value];
-}
 
 const productQuerySlice = createSlice({
   name: 'productQuery',
@@ -29,42 +28,57 @@ const productQuerySlice = createSlice({
     searchQuery: (state, action: PayloadAction<string>) => {
       state.searchValue = action.payload;
     },
-    // Updates params with the provided filter values
+
     setParams: (state, action: PayloadAction<ProductQueryParams>) => {
       state.params = {...state.params, ...action.payload};
     },
 
-    // Toggles a value in the array of a specific filter type
-    toggleFilter(
+    // Toggles a filter value. Handles both single-value and multi-value cases.
+    toggleFilter: (
       state,
-      action: PayloadAction<{filterType: string; value: string}>,
-    ) {
-      const {filterType, value} = action.payload;
+      action: PayloadAction<{
+        filterType: keyof ProductQueryParams;
+        value: string;
+        isSingleValue?: boolean;
+      }>,
+    ) => {
+      const {filterType, value, isSingleValue} = action.payload;
 
-      // Ensure the filterType exists in state.params and is an array
-      (state.params[filterType as keyof ProductQueryParams] as string[]) =
-        toggleValueInArray(
-          (state.params[filterType as keyof ProductQueryParams] as string[]) ||
-            [],
+      if (isSingleValue) {
+        // Single-value case: If the value matches the current one, reset it; otherwise, set it.
+        state.params[filterType] =
+          state.params[filterType] === value ? undefined : (value as any);
+      } else {
+        // Multi-value (array) case: Toggle the value in the array
+        state.params[filterType] = toggleValueInArray(
+          (state.params[filterType] as string[]) || [],
           value,
-        );
+        ) as any;
+      }
     },
 
-    // Resets all filters back to the initial empty state
     resetParams: state => {
       state.params = {};
     },
-    setLoading(state, action: PayloadAction<boolean>) {
+
+    setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
-    // Applies the current params to the appliedFilters and clears params
+
     applyFilters: state => {
       state.appliedFilters = {...state.params};
+      state.params = {}; // Clear params after applying
     },
   },
 });
 
-export const {setParams, resetParams, toggleFilter, applyFilters, setLoading ,searchQuery} =
-  productQuerySlice.actions;
+export const {
+  setParams,
+  resetParams,
+  toggleFilter,
+  applyFilters,
+  setLoading,
+  searchQuery,
+} = productQuerySlice.actions;
 
 export default productQuerySlice.reducer;

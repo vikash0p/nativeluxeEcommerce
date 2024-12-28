@@ -4,7 +4,7 @@ import {useLogoutUserMutation} from '../../redux-toolkit/features/auth/authApi';
 import {useAppDispatch} from '../../redux-toolkit/hooks';
 import {logout as logoutAction} from '../../redux-toolkit/features/auth/authSlice';
 import {useNavigation} from '@react-navigation/native';
-import {LoginScreenNavigationProp} from '../../utils/types/navigationTypes';
+import {LoginScreenNavigationProp} from '../../navigation/navigationTypes';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Toast} from 'toastify-react-native';
 const LogoutButton = () => {

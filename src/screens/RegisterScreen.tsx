@@ -9,7 +9,7 @@ import {
   Image,
 } from 'react-native';
 import {useRegisterUserMutation} from '../redux-toolkit/features/auth/authApi';
-import {RegisterScreenNavigationProp} from '../utils/types/navigationTypes';
+import {RegisterScreenNavigationProp} from '../navigation/navigationTypes';
 import {Toast} from 'toastify-react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import ReusableButton from '../components/ReusableComponents/ReusableButton';

@@ -13,50 +13,86 @@ import {toggleFilter} from '../../redux-toolkit/features/products/productQuerySl
 import Rating from './Rating';
 import Discount from './Discount';
 import Price from './Price';
+import {ProductQueryParams} from '../../redux-toolkit/types';
 
 const Filters = () => {
   const dispatch = useAppDispatch();
   const {params} = useAppSelector((state: RootState) => state.productQuery);
-  console.log('🚀 ~ file: Filters.tsx:12 ~ params:', params.color);
+
+  // Reusable handler for toggling filters
+  const handleToggleFilter = (
+    filterType: keyof ProductQueryParams,
+    value: string,
+  ) => {
+    dispatch(toggleFilter({filterType, value}));
+  };
+
+  // Helper function to ensure query is always string[]
+  const ensureArray = (value: string | string[] | undefined): string[] => {
+    if (Array.isArray(value)) {
+      return value;
+    }
+    if (typeof value === 'string') {
+      return [value];
+    }
+    return [];
+  };
+
+  // Array for rendering ReusableFilters dynamically
+  const filterOptions: {
+    title: string;
+    data: string[];
+    query: string[];
+    filterType: keyof ProductQueryParams; // Ensure filterType is a key of ProductQueryParams
+  }[] = [
+    {
+      title: 'Categories',
+      data: categories,
+      query: ensureArray(params.category),
+      filterType: 'category',
+    },
+    {
+      title: 'Brands',
+      data: brands,
+      query: ensureArray(params.brand),
+      filterType: 'brand',
+    },
+    {
+      title: 'Material',
+      data: materials,
+      query: ensureArray(params.material),
+      filterType: 'material',
+    },
+    {
+      title: 'Colors',
+      data: color,
+      query: ensureArray(params.color),
+      filterType: 'color',
+    },
+  ];
 
   return (
-    <View className=" flex-1 flex-col gap-y-8 mb-20 ">
+    <View className="flex-1 flex-col gap-y-8 mb-20">
+      {/* Price Filter */}
       <Price />
-      {/* category */}
-      <ReusableFilters
-        data={categories}
-        toggleCheckbox={(item: string) =>
-          dispatch(toggleFilter({filterType: 'category', value: item}))
-        }
-        query={params.category || []}
-        title="Categories"
-      />
-      {/* brand */}
-      <ReusableFilters
-        data={brands}
-        toggleCheckbox={(item: string) =>
-          dispatch(toggleFilter({filterType: 'brand', value: item}))
-        }
-        query={params.brand || []}
-        title="Brands"
-      />
-      <ReusableFilters
-        data={materials}
-        toggleCheckbox={(item: string) =>
-          dispatch(toggleFilter({filterType: 'material', value: item}))
-        }
-        query={params.material || []}
-        title="Material"
-      />
-      <ReusableFilters
-        data={color}
-        toggleCheckbox={(item: string) =>
-          dispatch(toggleFilter({filterType: 'color', value: item}))
-        }
-        query={params.color || []}
-        title="Colors"
-      />
+
+      {/* ReusableFilters for category, brand, material, and color */}
+      {filterOptions.map(({title, data, query, filterType}) => (
+        <ReusableFilters
+          key={title}
+          data={data}
+          toggleCheckbox={
+            (item: string) => handleToggleFilter(filterType, item) // filterType is now correctly typed
+          }
+          query={query}
+          title={title}
+        />
+      ))}
+
+      {/* Rating Filter */}
       <Rating />
+
+      {/* Discount Filter */}
       <Discount />
     </View>
   );

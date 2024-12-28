@@ -5,7 +5,7 @@ import HomeCategory from '../components/HomeComponents/HomeCategory';
 import HomeCarousel from '../components/HomeComponents/HomeCarousel';
 import HomeCollection from '../components/HomeComponents/HomeCollection';
 import ReusableImage from '../components/ReusableComponents/ReusableImage';
-import {TabsScreenNavigationProp} from '../utils/types/navigationTypes';
+import {TabsScreenNavigationProp} from '../navigation/navigationTypes';
 import {View} from 'react-native';
 
 const HomeScreen: React.FC<{navigation: TabsScreenNavigationProp}> = ({

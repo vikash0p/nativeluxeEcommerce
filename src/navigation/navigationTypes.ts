@@ -5,6 +5,7 @@ export type RootStackParamList = {
   Welcome: undefined;
   Cart: undefined;
   Tabs: undefined;
+  Search: undefined;
 };
 
 export type RegisterScreenNavigationProp = NativeStackNavigationProp< RootStackParamList, 'Register'>;
@@ -12,6 +13,7 @@ export type LoginScreenNavigationProp = NativeStackNavigationProp< RootStackPara
 export type WelcomeScreenNavigationProp = NativeStackNavigationProp< RootStackParamList, 'Welcome'>;
 export type CartScreenNavigationProp = NativeStackNavigationProp<RootStackParamList,'Cart'>;
 export type TabsScreenNavigationProp = NativeStackNavigationProp< RootStackParamList, 'Tabs'>;
+export type SearchScreenNavigationProp = NativeStackNavigationProp< RootStackParamList, 'Search'>;
 
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, ImageBackground} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context'; // Ensure safe area padding
-import {WelcomeScreenNavigationProp} from '../utils/types/navigationTypes';
+import {WelcomeScreenNavigationProp} from '../navigation/navigationTypes';
 import ReusableButton from '../components/ReusableComponents/ReusableButton';
 
 const WelcomeScreen = ({
@@ -11,8 +11,6 @@ const WelcomeScreen = ({
 }) => {
   return (
     <SafeAreaView className="flex-1 bg-white">
-
-
       <ImageBackground
         source={require('../asset/images/welcome.png')} // Replace with your background image
         resizeMode="cover"

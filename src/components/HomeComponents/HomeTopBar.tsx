@@ -1,19 +1,19 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import {View, TouchableOpacity, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { NavigationProp } from '@react-navigation/native';
-import { RootStackParamList } from '../../utils/types/navigationTypes';
+import {NavigationProp} from '@react-navigation/native';
+import {RootStackParamList} from '../../navigation/navigationTypes';
 import Search from '../Filters/Search';
 
 const HomeTopBar: React.FC<{
   navigation: NavigationProp<RootStackParamList>;
-}> = ({ navigation }) => {
+}> = ({navigation}) => {
   const cartItemCount = 3;
 
   return (
     <View className="w-screen flex-row items-center justify-between px-3 py-3 bg-[#4f46e5] shadow-md rounded-b-3xl">
       {/* Search Component */}
-      <Search />
+      <Search style="w-[88%]" />
 
       {/* Cart Icon with Red Badge */}
       <View className="relative ">

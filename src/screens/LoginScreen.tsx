@@ -1,14 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import {useLoginUserMutation} from '../redux-toolkit/features/auth/authApi';
-import {LoginScreenNavigationProp} from '../utils/types/navigationTypes';
+import {LoginScreenNavigationProp} from '../navigation/navigationTypes';
 import {Toast} from 'toastify-react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import ReusableButton from '../components/ReusableComponents/ReusableButton';
@@ -41,7 +35,6 @@ const LoginScreen = ({navigation}: {navigation: LoginScreenNavigationProp}) => {
 
   return (
     <SafeAreaView className="flex-1 p-8 bg-gray-100">
-
       {/* Header with Logo and Title */}
       <View className="flex-row items-center justify-center gap-5 mt-12">
         <View className="w-[105px] h-px bg-[#bdbdbd] rounded-sm" />

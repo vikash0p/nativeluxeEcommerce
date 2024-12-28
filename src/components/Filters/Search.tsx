@@ -9,12 +9,12 @@ import {
 } from '../../redux-toolkit/features/products/productQuerySlice';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootTabsParamsList} from '../../utils/types/navigationTypes';
+import {RootStackParamList} from '../../navigation/navigationTypes';
 import {RootState} from '../../redux-toolkit/store';
 
-const Search = () => {
+const Search = ({style}:{style?: string}) => {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootTabsParamsList>>();
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {searchValue} = useAppSelector(
     (state: RootState) => state.productQuery,
   );
@@ -35,12 +35,13 @@ const Search = () => {
   const handleSubmit = () => {
     if (searchValue.trim()) {
       dispatch(setParams({search: searchValue.trim()}));
-      navigation.navigate('Product');
+      navigation.navigate('Search');
     }
   };
 
   return (
-    <View className="flex-row items-center bg-gray-100 rounded-full px-4 py-1 shadow-sm w-[88%] ">
+    <View
+      className={`flex-row items-center bg-gray-100 rounded-full px-4 py-1 shadow-sm ${style}`}>
       <TextInput
         className="flex-1 text-gray-700 text-base"
         placeholder="Search for products..."

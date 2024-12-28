@@ -5,6 +5,11 @@ import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Ionicons
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'; // Material Icons
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'; // Material Community Icons
+import {useAppDispatch} from '../../redux-toolkit/hooks';
+import {toggleFilter} from '../../redux-toolkit/features/products/productQuerySlice';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootTabsParamsList} from '../../navigation/navigationTypes';
 
 // Define the type for category items
 interface Category {
@@ -22,19 +27,24 @@ const categories: Category[] = [
     iconSet: 'MaterialCommunityIcons',
     icon: 'dresser-outline',
   },
-  {id: '2', name: 'Dining', iconSet: 'Ionicons', icon: 'restaurant-outline'},
+  {id: '2', name: 'dining', iconSet: 'Ionicons', icon: 'restaurant-outline'},
   {
     id: '4',
-    name: 'Sofa',
+    name: 'sofa',
     iconSet: 'MaterialCommunityIcons',
     icon: 'sofa-outline',
   },
-  {id: '5', name: 'Bed', iconSet: 'Ionicons', icon: 'bed-outline'},
-  {id: '6', name: 'Wardrobe', iconSet: 'Ionicons', icon: 'briefcase-outline'},
-  {id: '3', name: 'Chair', iconSet: 'MaterialIcons', icon: 'chair'},
+  {id: '5', name: 'bed', iconSet: 'Ionicons', icon: 'bed-outline'},
+  {id: '6', name: 'wardrobe', iconSet: 'Ionicons', icon: 'briefcase-outline'},
+  {id: '3', name: 'chair', iconSet: 'MaterialIcons', icon: 'chair'},
 ];
 
 const HomeCategory = () => {
+  const dispatch = useAppDispatch();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootTabsParamsList>>();
+
+
   const renderItem = ({item}: {item: Category}) => {
     // Declare IconComponent and set it conditionally
     let IconComponent: React.ComponentType<any> = Ionicons; // Default to Ionicons
@@ -46,13 +56,17 @@ const HomeCategory = () => {
       IconComponent = MaterialCommunityIcons;
     }
 
+    const filterCategoryFunction = (cat: string) => {
+      dispatch(toggleFilter({filterType: 'category', value: cat, isSingleValue: true}));
+      navigation.navigate('Product');
+    };
+
     return (
       <View className="items-center">
         <TouchableOpacity
-          onPress={() => console.log('Category selected: ', item.name)}
+          onPress={() => filterCategoryFunction(item.name)}
           activeOpacity={0.8}
-
-         className="items-center justify-center px-3 py-2 m-2 bg-[#4f46e5] text- rounded-lg shadow-sm ">
+          className="items-center justify-center px-3 py-2 m-2 bg-[#4f46e5] text- rounded-lg shadow-sm ">
           {/* Category Icon */}
           <IconComponent
             name={item.icon}
@@ -60,9 +74,9 @@ const HomeCategory = () => {
             color="#fff"
             style={{marginBottom: 8}}
           />
-        </TouchableOpacity  >
+        </TouchableOpacity>
         <Text className="text-lg font-semibold text-[#4f46e5]">
-          {item.name}
+          {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
         </Text>
       </View>
     );

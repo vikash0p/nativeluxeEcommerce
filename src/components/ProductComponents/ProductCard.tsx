@@ -4,13 +4,13 @@ import {Product} from '../../utils/types/productTypes';
 
 const ProductCard: React.FC<{item: Product}> = ({item}) => {
   return (
-    <View className="bg-gray-100 h-80 rounded-lg p-4">
+    <View className="bg-gray-200 h-80 rounded-lg p-4">
       <Image
         source={{uri: item.image}}
         className="h-40 w-full rounded-md"
         resizeMode="cover"
       />
-      <Text className="text-sm font-bold mt-2 text-gray-800">{item.title}</Text>
+      <Text className="text-sm font-bold mt-2 text-gray-800 ">{item.title}</Text>
       <Text className="text-xs text-gray-500 mt-1">{item.category}</Text>
       <Text className="text-sm font-semibold text-[#4f46e5] mt-1">
         ${item.finalPrice.toFixed(2)}

@@ -40,19 +40,28 @@ export interface ProductResponse {
 }
 
 export interface ProductQueryParams {
-  page?: number;
-  limit?: number;
-  sortBy?: string;
-  search?: string;
-  minPrice?: number;
-  maxPrice?: number;
-  minRating?: number;
-  discount?: number;
-  category?: string[];
-  brand?: string[];
-  material?: string[];
-  color?: string[];
-  location?: string[];
+  page?: number;              // Pagination: Current page number
+  limit?: number;             // Pagination: Number of items per page
+  sortBy?: string;            // Sorting: Field to sort by (e.g., price, rating)
+  sortOrder?: 'asc' | 'desc'; // Sorting order: ascending or descending
+  search?: string;            // Text search query
+  minPrice?: number;          // Price filter: Minimum price
+  maxPrice?: number;          // Price filter: Maximum price
+  minRating?: number;         // Rating filter: Minimum rating
+  maxRating?: number;         // Rating filter: Maximum rating
+  discount?: number;          // Discount filter: Minimum discount percentage
+  inStock?: boolean;          // Filter for availability
+  category?: string | string[];  // Category filter: Single or multiple categories
+  brand?: string| string[];              // Brand filter: Array of brand names
+  material?: string | string[];           // Material filter: Array of material types
+  color?: string| string[];              // Color filter: Array of colors
+  location?:string | string[];           // Location filter: Array of location names
+  isNewArrival?: boolean;        // Filter for new arrivals
+  isFeatured?: boolean;          // Filter for featured products
+  tags?: string[];               // Tags for additional categorization
+  customAttributes?: {
+    [key: string]: string | string[]; // Custom attributes for advanced filtering
+  };
 }
 
 export interface UserProps {
