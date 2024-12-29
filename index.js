@@ -19,6 +19,7 @@ const Root = () => (
         <GlobalUserLayout>
             <PaperProvider>
                 <App />
+                
             </PaperProvider>
             <ToastManager />
         </GlobalUserLayout>
