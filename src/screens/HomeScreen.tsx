@@ -14,8 +14,8 @@ const HomeScreen: React.FC<{navigation: TabsScreenNavigationProp}> = ({
 }) => {
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <ScrollView contentContainerStyle={{paddingBottom: 20}}>
         <HomeTopBar navigation={navigation} />
+      <ScrollView contentContainerStyle={{paddingBottom: 20}}>
         <HomeCarousel />
         <HomeCategory />
         <View>

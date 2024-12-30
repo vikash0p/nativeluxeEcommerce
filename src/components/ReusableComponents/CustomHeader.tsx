@@ -5,8 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 interface CustomHeaderProps {
   data: {
-    icons: string;
-    title: string;
+    title: string |null ;
   };
 }
 
@@ -22,8 +21,10 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({data}) => {
 
       {/* Center Icon and Title */}
       <View className="flex-row items-center">
-        <Ionicons name={data.icons} size={24} color="#fff" className="mr-2" />
-        <Text className="text-white font-bold text-lg">{data.title}</Text>
+        <Text className="text-white font-bold text-lg">
+          {(data?.title as string)?.charAt(0).toUpperCase() +
+            (data?.title as string)?.slice(1)}
+        </Text>
       </View>
     </View>
   );

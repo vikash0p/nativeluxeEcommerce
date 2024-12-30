@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'; // Ionicons
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'; // Material Icons
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'; // Material Community Icons
 import {useAppDispatch} from '../../redux-toolkit/hooks';
-import {toggleFilter} from '../../redux-toolkit/features/products/productQuerySlice';
+import {setCategory} from '../../redux-toolkit/features/products/productQuerySlice';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigation/navigationTypes';
@@ -44,7 +44,6 @@ const HomeCategory = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-
   const renderItem = ({item}: {item: Category}) => {
     // Declare IconComponent and set it conditionally
     let IconComponent: React.ComponentType<any> = Ionicons; // Default to Ionicons
@@ -57,7 +56,8 @@ const HomeCategory = () => {
     }
 
     const filterCategoryFunction = (cat: string) => {
-      dispatch(toggleFilter({filterType: 'category', value: cat, isSingleValue: true}));
+      console.log('🚀 ~ file: HomeCategory.tsx:60 ~ cat:', cat);
+      dispatch(setCategory(cat));
       navigation.navigate('ViewMore');
     };
 

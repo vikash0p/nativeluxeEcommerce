@@ -26,8 +26,8 @@ const HomeTopBar: React.FC<{
         </TouchableOpacity>
 
         {cartItemCount > 0 && (
-          <View className="absolute -top-2 -right-2 bg-white rounded-full w-6 h-6 items-center justify-center">
-            <Text className="text-[#4f46e5] text-xs font-bold">
+          <View className="absolute -top-1 -right-2 bg-[red] rounded-full w-5 h-5 items-center justify-center">
+            <Text className="text-white text-xs font-bold">
               {cartItemCount}
             </Text>
           </View>

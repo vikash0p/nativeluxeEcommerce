@@ -3,7 +3,6 @@ import React from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
 import {
-  applyFilters,
   resetParams,
 } from '../../redux-toolkit/features/products/productQuerySlice';
 import Filters from '../Filters/Filters';
@@ -19,7 +18,7 @@ const ProductFilterModel: React.FC<ProductFilterModelProps> = ({
 }) => {
   const dispatch = useDispatch();
   const handleApplyFilters = () => {
-    dispatch(applyFilters()); // Apply filters
+    // dispatch(applyFilters());
     setIsOpen(false); // Close the modal
   };
 

@@ -2,7 +2,7 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 
 import {useAppDispatch} from '../../redux-toolkit/hooks';
-import {toggleFilter} from '../../redux-toolkit/features/products/productQuerySlice';
+import {setCategory} from '../../redux-toolkit/features/products/productQuerySlice';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigation/navigationTypes';
@@ -11,9 +11,7 @@ const HomeCollection = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const filterCategoryFunction = (cat: string) => {
-    dispatch(
-      toggleFilter({filterType: 'category', value: cat, isSingleValue: true}),
-    );
+    dispatch(setCategory(cat));
     navigation.navigate('ViewMore');
   };
 

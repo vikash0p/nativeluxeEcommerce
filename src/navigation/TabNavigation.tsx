@@ -9,11 +9,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import UserScreen from '../screens/UserScreen';
 import NotificationScreen from '../screens/NotificationScreen';
 import FavoriteScreen from '../screens/FavoriteScreen';
+import CustomHeader from "../components/ReusableComponents/CustomHeader";
+
 
 const Tabs = createBottomTabNavigator();
 
 const TabNavigation = () => {
   const [unreadNotifications, setUnreadNotifications] = useState(5); // Example notification count
+  const [unreadFavorites, setUnreadFavorites] = useState(10); // Example notification count
 
   return (
     <Tabs.Navigator
@@ -58,6 +61,11 @@ const TabNavigation = () => {
                   <Text style={styles.badgeText}>{unreadNotifications}</Text>
                 </View>
               )}
+              {route.name === 'Favorite' && unreadFavorites > 0 && (
+                <View style={styles.badgeContainer}>
+                  <Text style={styles.badgeText}>{unreadFavorites}</Text>
+                </View>
+              )}
             </View>
           );
         },
@@ -68,7 +76,11 @@ const TabNavigation = () => {
         component={ProductScreen}
         options={{tabBarLabel: 'Products'}}
       />
-      <Tabs.Screen name="Favorite" component={FavoriteScreen} />
+      <Tabs.Screen name="Favorite" component={FavoriteScreen} options={{
+        tabBarLabel: 'Favorites',
+        headerShown: true,
+        header: () => <CustomHeader data={{title: 'Favorites'}} />,
+      }} />
       <Tabs.Screen name="Notification" component={NotificationScreen} />
       <Tabs.Screen name="User" component={UserScreen} />
     </Tabs.Navigator>
@@ -101,7 +113,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -10,
     top: -4,
-    backgroundColor: '#4f46e5',
+    backgroundColor: 'red',
     borderRadius: 10,
     width: 18,
     height: 18,

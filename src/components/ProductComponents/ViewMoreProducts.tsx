@@ -1,82 +1,107 @@
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
-import React from 'react';
-import {useAppDispatch, useAppSelector} from '../../redux-toolkit/hooks';
+import React, {useState, useEffect} from 'react';
+import {FlatList, Text, View, ActivityIndicator} from 'react-native';
+import {useGetProductsByCategoryQuery} from '../../redux-toolkit/features/products/productApi';
+import {Product} from '../../utils/types/productTypes';
+import {useAppSelector} from '../../redux-toolkit/hooks';
 import {RootState} from '../../redux-toolkit/store';
-import {useGetProductsQuery} from '../../redux-toolkit/features/products/productApi';
-import {resetParams} from '../../redux-toolkit/features/products/productQuerySlice';
-import ProductCard from '../ProductComponents/ProductCard';
-import Pagination from '../Filters/Pagination';
+import ProductCard from './ProductCard'; // Import the ProductCard component
 
 const ViewMoreProducts = () => {
-  const dispatch = useAppDispatch();
-  const {params} = useAppSelector((state: RootState) => state.productQuery);
-  const {data, isLoading, isError, error, refetch} =
-    useGetProductsQuery(params);
+  const {selectedCategory: category} = useAppSelector(
+    (state: RootState) => state.productQuery,
+  );
 
-  const products = data?.products || [];
+  const [page, setPage] = useState(1); // Current page number
+  const [products, setProducts] = useState<Product[]>([]); // Store loaded products
+  const [hasMore, setHasMore] = useState(true); // Check if more products exist
 
-  // Extracting error message for better readability
+  const {data, error, isLoading, isFetching, isError} =
+    useGetProductsByCategoryQuery(
+      {category: category ?? '', page, limit: 12}, // Query parameters
+      {skip: !category}, // Skip query if no category
+    );
+
+  const totalProducts = data?.totalProducts;
+
+  // Update products and pagination state when data changes
+  useEffect(() => {
+    if (data && totalProducts !== undefined) {
+      if (data.products && data.products.length > 0) {
+        setProducts(prev => [...prev, ...data.products]); // Append new products
+        setHasMore(data.products.length < totalProducts); // Check if more products exist
+      } else {
+        setHasMore(false); // If no products, stop pagination
+      }
+    }
+  }, [data, totalProducts]);
+
+  // Load more products when the user scrolls to the bottom
+  const loadMoreProducts = () => {
+    if (!isFetching && hasMore) {
+      setPage(prev => prev + 1);
+    }
+  };
+
+  // Handle loading state
+  if (isLoading && page === 1) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator size="large" color="#000" />
+        <Text className="mt-4 text-gray-500">Loading...</Text>
+      </View>
+    );
+  }
+
+  // Handle error state
   const errorMessage =
     isError &&
     'data' in error &&
     (error as {data: {message: string}}).data.message;
 
-  // Loading State
-
-  if (isLoading) {
+  if (isError) {
     return (
-      <View className="flex-1 justify-center items-center bg-white">
-        <ActivityIndicator size="large" color="#4f46e5" />
-        <Text className="text-lg font-medium text-gray-500 mt-4">
-          Loading products...
+      <View className="flex-1 justify-center items-center">
+        <Text className="text-red-500">
+          Error: {errorMessage || 'Something went wrong'}
         </Text>
       </View>
     );
   }
 
-  // Error or No Data State
-  if (isError || !data || products.length === 0) {
+  // Handle no products found
+  if (products.length === 0) {
     return (
-      <View className="flex-1 justify-center items-center bg-white">
-        <Text className="text-2xl font-medium text-red-500">
-          {errorMessage || 'No products found. Please try again.'}
+      <View className="flex-1 justify-center items-center">
+        <Text className="text-gray-500">
+          No products found in the selected category.
         </Text>
-        {/* Retry Button */}
-        <TouchableOpacity
-          onPress={() => {
-            refetch();
-            dispatch(resetParams());
-          }}>
-          <Text className="text-lg font-medium text-white bg-[#4f46e5] mt-4 px-5 py-2 rounded-sm">
-            Retry
-          </Text>
-        </TouchableOpacity>
-
-        {/* Filter Modal */}
       </View>
     );
   }
+
+  // Render ProductCard component for each item
+  const renderItem = ({item}: {item: Product}) => <ProductCard item={item} style="h-80" />;
+
   return (
-    <View>
-      {/* Product List */}
-      <ScrollView className="px-2  ">
-        <View className="flex flex-wrap flex-row justify-between  pt-2 pb-10 ">
-          {products.map(item => (
-            <View key={item._id} className="w-[48%] mb-4">
-              <ProductCard item={item} />
-            </View>
-          ))}
-        </View>
-        {/* Pagination */}
-        {data.totalProducts >= 12 ? <Pagination /> : null}
-      </ScrollView>
-    </View>
+    <FlatList
+      data={products}
+      keyExtractor={item => item._id}
+      renderItem={renderItem}
+      onEndReached={loadMoreProducts}
+      onEndReachedThreshold={0.5}
+      ListFooterComponent={
+        isFetching ? (
+          <View className="mt-4">
+            <ActivityIndicator size="small" color="#000" />
+            <Text className="mt-2 text-gray-500">Loading more products...</Text>
+          </View>
+        ) : !hasMore ? (
+          <Text className="mt-4 text-center text-gray-500 py-2">
+            No more products to load.
+          </Text>
+        ) : null
+      }
+    />
   );
 };
 

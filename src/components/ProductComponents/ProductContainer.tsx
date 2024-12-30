@@ -88,7 +88,7 @@ const ProductContainer: React.FC = () => {
         <View className="flex flex-wrap flex-row justify-between  pt-3">
           {products.map(item => (
             <View key={item._id} className="w-[48%] mb-4">
-              <ProductCard item={item} />
+              <ProductCard item={item} style="h-40" />
             </View>
           ))}
         </View>

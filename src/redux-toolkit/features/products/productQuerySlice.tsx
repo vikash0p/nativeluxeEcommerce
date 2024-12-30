@@ -6,6 +6,7 @@ interface ProductQueryState {
   appliedFilters: ProductQueryParams; // Filters that are applied
   loading: boolean;
   searchValue: string;
+  selectedCategory: string | null; // Added category selection
 }
 
 const initialState: ProductQueryState = {
@@ -13,6 +14,7 @@ const initialState: ProductQueryState = {
   appliedFilters: {}, // Represents the confirmed applied filter state
   loading: false,
   searchValue: '',
+  selectedCategory: '' , // Initial category is null
 };
 
 // Utility function to toggle a value in an array
@@ -59,6 +61,11 @@ const productQuerySlice = createSlice({
 
     resetParams: state => {
       state.params = {};
+      state.selectedCategory = null; // Reset category when parameters are reset
+    },
+
+    setCategory: (state, action: PayloadAction<string>) => {
+      state.selectedCategory = action.payload;
     },
 
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -79,6 +86,7 @@ export const {
   applyFilters,
   setLoading,
   searchQuery,
+  setCategory, // Export the new action
 } = productQuerySlice.actions;
 
 export default productQuerySlice.reducer;

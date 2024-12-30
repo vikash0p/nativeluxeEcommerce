@@ -11,13 +11,19 @@ import CartScreen from '../screens/CartScreen';
 import CustomHeader from '../components/ReusableComponents/CustomHeader';
 import SearchScreen from '../screens/SearchScreen';
 import ViewMore from '../screens/ViewMore';
+import SingleProduct from '../screens/SingleProduct';
+import {useAppSelector} from '../redux-toolkit/hooks';
+import {RootState} from '../redux-toolkit/store';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const StackNavigation = () => {
+  const {selectedCategory} = useAppSelector((state: RootState) => state.productQuery);
   const cartData = {
-    icons: 'cart-outline',
     title: 'Cart',
+  };
+  const singleProductData = {
+    title: 'Product Details',
   };
   return (
     <NavigationContainer>
@@ -29,7 +35,22 @@ const StackNavigation = () => {
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Tabs" component={TabNavigation} />
         <Stack.Screen name="Search" component={SearchScreen} />
-        <Stack.Screen name="ViewMore" component={ViewMore} />
+        <Stack.Screen
+          name="ViewMore"
+          component={ViewMore}
+          options={{
+            headerShown: true,
+            header: () => <CustomHeader data={{title: selectedCategory}} />,
+          }}
+        />
+        <Stack.Screen
+          name="SingleProduct"
+          component={SingleProduct}
+          options={{
+            headerShown: true,
+            header: () => <CustomHeader data={singleProductData} />,
+          }}
+        />
         <Stack.Screen
           name="Cart"
           component={CartScreen}

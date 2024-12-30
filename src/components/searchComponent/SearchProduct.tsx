@@ -15,7 +15,9 @@ import Pagination from '../Filters/Pagination';
 
 const SearchProduct = () => {
   const dispatch = useAppDispatch();
-  const {params,searchValue} = useAppSelector((state: RootState) => state.productQuery);
+  const {params, searchValue} = useAppSelector(
+    (state: RootState) => state.productQuery,
+  );
   const {data, isLoading, isError, error, refetch} =
     useGetProductsQuery(params);
 
@@ -78,7 +80,7 @@ const SearchProduct = () => {
         <View className="flex flex-wrap flex-row justify-between  pt-2 pb-24 ">
           {products.map(item => (
             <View key={item._id} className="w-[48%] mb-4">
-              <ProductCard item={item} />
+              <ProductCard item={item} style="h-40" />
             </View>
           ))}
         </View>

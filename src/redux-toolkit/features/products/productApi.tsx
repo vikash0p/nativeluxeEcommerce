@@ -37,6 +37,21 @@ const productApi = createApi({
       },
       providesTags: ['Product'],
     }),
+    getSingleProduct: builder.query({
+      query: productId => ({
+        url: `/furniture/products/${productId}`,
+      }),
+      providesTags: ['Product'],
+    }),
+    getProductsByCategory: builder.query<
+      ProductResponse,
+      {category: string; page?: number; limit?: number}
+    >({
+      query: ({category, page = 1, limit = 12}) => ({
+        url: `/furniture/category/${category}?page=${page}&limit=${limit}`,
+      }),
+      providesTags: ['Product'],
+    }),
 
     addProduct: builder.mutation({
       query: newProduct => ({
@@ -69,5 +84,7 @@ export const {
   useDeleteProductMutation,
   useUpdateProductMutation,
   useGetProductsQuery,
+  useGetSingleProductQuery,
+  useGetProductsByCategoryQuery,
 } = productApi;
 export default productApi;
