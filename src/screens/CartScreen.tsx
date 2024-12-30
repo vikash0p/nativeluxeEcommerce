@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {
   View,
@@ -7,8 +8,8 @@ import {
   TextInput,
   FlatList,
 } from 'react-native';
-import  Feather from 'react-native-vector-icons/Feather';
-import MaterialIcons  from 'react-native-vector-icons/MaterialIcons';
+import Feather from 'react-native-vector-icons/Feather';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 interface CartItem {
   id: string;

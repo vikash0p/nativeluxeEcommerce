@@ -1,12 +1,13 @@
 import {View, Text} from 'react-native';
 import React from 'react';
-import { Product } from "../../redux-toolkit/types";
+import {Product} from '../../redux-toolkit/types';
 
-const AdditionalInformation = ({product}:{product:Product}) => {
+const AdditionalInformation = ({product}: {product: Product}) => {
   return (
     <View className="bg-white p-4  space-y-2">
       <Text className="text-lg font-semibold text-gray-800">
-        Additional Information      </Text>
+        Additional Information{' '}
+      </Text>
 
       {/* Material */}
       <View className="flex-row items-center">
@@ -23,7 +24,10 @@ const AdditionalInformation = ({product}:{product:Product}) => {
       {/* Dimensions */}
       <View className="flex-row items-center">
         <Text className="font-semibold text-gray-700 w-32">Dimensions:</Text>
-        <Text className="text-gray-600">{product.dimension.height} x {product.dimension.width} x {product.dimension.length}</Text>
+        <Text className="text-gray-600">
+          {product.dimension.height} x {product.dimension.width} x{' '}
+          {product.dimension.length}
+        </Text>
       </View>
 
       {/* Brand */}

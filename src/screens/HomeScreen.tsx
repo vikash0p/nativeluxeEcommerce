@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {SafeAreaView, ScrollView, View} from 'react-native';
 import React from 'react';
 import HomeTopBar from '../components/HomeComponents/HomeTopBar';
@@ -7,14 +8,14 @@ import HomeCollection from '../components/HomeComponents/HomeCollection';
 import ReusableImage from '../components/ReusableComponents/ReusableImage';
 import Footer from '../components/Globalcomponets/Footer';
 import {TabsScreenNavigationProp} from '../navigation/navigationTypes';
-import Features from "../components/HomeComponents/Features";
+import Features from '../components/HomeComponents/Features';
 
 const HomeScreen: React.FC<{navigation: TabsScreenNavigationProp}> = ({
   navigation,
 }) => {
   return (
     <SafeAreaView className="flex-1 bg-white">
-        <HomeTopBar navigation={navigation} />
+      <HomeTopBar navigation={navigation} />
       <ScrollView contentContainerStyle={{paddingBottom: 20}}>
         <HomeCarousel />
         <HomeCategory />
