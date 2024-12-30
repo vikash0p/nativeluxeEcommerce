@@ -5,17 +5,16 @@ import {useAppDispatch} from '../../redux-toolkit/hooks';
 import {toggleFilter} from '../../redux-toolkit/features/products/productQuerySlice';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootTabsParamsList} from '../../navigation/navigationTypes';
+import {RootStackParamList} from '../../navigation/navigationTypes';
 import {collections} from '../../utils/data/HomeData';
 const HomeCollection = () => {
   const dispatch = useAppDispatch();
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootTabsParamsList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const filterCategoryFunction = (cat: string) => {
     dispatch(
       toggleFilter({filterType: 'category', value: cat, isSingleValue: true}),
     );
-    navigation.navigate('Product');
+    navigation.navigate('ViewMore');
   };
 
   return (

@@ -10,6 +10,7 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import CartScreen from '../screens/CartScreen';
 import CustomHeader from '../components/ReusableComponents/CustomHeader';
 import SearchScreen from '../screens/SearchScreen';
+import ViewMore from '../screens/ViewMore';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -28,6 +29,7 @@ const StackNavigation = () => {
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Tabs" component={TabNavigation} />
         <Stack.Screen name="Search" component={SearchScreen} />
+        <Stack.Screen name="ViewMore" component={ViewMore} />
         <Stack.Screen
           name="Cart"
           component={CartScreen}

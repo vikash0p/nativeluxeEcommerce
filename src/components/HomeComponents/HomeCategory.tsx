@@ -9,7 +9,7 @@ import {useAppDispatch} from '../../redux-toolkit/hooks';
 import {toggleFilter} from '../../redux-toolkit/features/products/productQuerySlice';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootTabsParamsList} from '../../navigation/navigationTypes';
+import {RootStackParamList} from '../../navigation/navigationTypes';
 
 // Define the type for category items
 interface Category {
@@ -42,7 +42,7 @@ const categories: Category[] = [
 const HomeCategory = () => {
   const dispatch = useAppDispatch();
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootTabsParamsList>>();
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
 
   const renderItem = ({item}: {item: Category}) => {
@@ -58,7 +58,7 @@ const HomeCategory = () => {
 
     const filterCategoryFunction = (cat: string) => {
       dispatch(toggleFilter({filterType: 'category', value: cat, isSingleValue: true}));
-      navigation.navigate('Product');
+      navigation.navigate('ViewMore');
     };
 
     return (
