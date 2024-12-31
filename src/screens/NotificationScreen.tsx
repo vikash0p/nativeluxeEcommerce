@@ -118,7 +118,7 @@ const NotificationScreen = () => {
 
   return (
     <View className="flex-1 bg-gray-100 p-4">
-      <Text className="text-2xl font-bold text-gray-800 mb-4">Notifications</Text>
+      {/* <Text className="text-2xl font-bold text-gray-800 mb-4">Notifications</Text> */}
       <FlatList
         data={notifications}
         renderItem={renderItem}

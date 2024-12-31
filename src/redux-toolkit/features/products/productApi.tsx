@@ -37,6 +37,12 @@ const productApi = createApi({
       },
       providesTags: ['Product'],
     }),
+    getNewArrivalProducts: builder.query({
+      query: () => ({
+        url: '/furniture/newArrivals',
+      }),
+      providesTags: ['Product'],
+    }),
     getSingleProduct: builder.query({
       query: productId => ({
         url: `/furniture/products/${productId}`,
@@ -100,5 +106,6 @@ export const {
   useGetSingleProductQuery,
   useGetProductsByCategoryQuery,
   useGetProductsByFilterQuery,
+  useGetNewArrivalProductsQuery,
 } = productApi;
 export default productApi;
