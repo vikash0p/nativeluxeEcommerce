@@ -7,14 +7,24 @@ interface ProductQueryState {
   loading: boolean;
   searchValue: string;
   selectedCategory: string | null; // Added category selection
+
+  filterType: string; // Default filter type
+  filterValue: string; // Default filter value
+  page: number;
+  limit: number;
 }
 
 const initialState: ProductQueryState = {
-  params: {}, // Represents current filter state before applying
-  appliedFilters: {}, // Represents the confirmed applied filter state
+  params: {},
+  appliedFilters: {},
   loading: false,
   searchValue: '',
-  selectedCategory: '' , // Initial category is null
+  selectedCategory: '',
+
+  filterType: '',
+  filterValue: '',
+  page: 1,
+  limit: 12,
 };
 
 // Utility function to toggle a value in an array
@@ -27,6 +37,15 @@ const productQuerySlice = createSlice({
   name: 'productQuery',
   initialState,
   reducers: {
+    setFilter: (state, action) => {
+      state.filterType = action.payload.filterType;
+      state.filterValue = action.payload.filterValue;
+      // state.page = 1; // Reset page to 1 when filter changes
+    },
+    setPage: (state, action) => {
+      state.page = action.payload.page;
+    },
+
     searchQuery: (state, action: PayloadAction<string>) => {
       state.searchValue = action.payload;
     },
@@ -86,7 +105,9 @@ export const {
   applyFilters,
   setLoading,
   searchQuery,
-  setCategory, // Export the new action
+  setCategory,
+  setFilter,
+  setPage,
 } = productQuerySlice.actions;
 
 export default productQuerySlice.reducer;

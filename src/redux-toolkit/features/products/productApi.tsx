@@ -43,6 +43,19 @@ const productApi = createApi({
       }),
       providesTags: ['Product'],
     }),
+    getProductsByFilter: builder.query<
+      ProductResponse,
+      {
+        filterType: string;
+        filterValue: string;
+        page?: number;
+        limit?: number;
+      }
+    >({
+      query: ({filterType, filterValue, page = 1, limit = 12}) =>
+        `furniture/products/${filterType}/${filterValue}?page=${page}&limit=${limit}`,
+      providesTags: ['Product'],
+    }),
     getProductsByCategory: builder.query<
       ProductResponse,
       {category: string; page?: number; limit?: number}
@@ -86,5 +99,6 @@ export const {
   useGetProductsQuery,
   useGetSingleProductQuery,
   useGetProductsByCategoryQuery,
+  useGetProductsByFilterQuery,
 } = productApi;
 export default productApi;

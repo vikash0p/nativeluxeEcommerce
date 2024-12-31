@@ -25,7 +25,7 @@ const ProductCard: React.FC<{item: Product ,style:string}> = ({item, style}) => 
         <Text className="text-sm font-bold mt-2 text-gray-800 ">
           {item.title}
         </Text>
-        <Text className="text-xs text-gray-500 mt-1">{item.category}</Text>
+        <Text className="text-xs text-gray-500 mt-1">{item.category} | {item.brand} </Text>
         <Text className="text-sm font-semibold text-[#4f46e5] mt-1">
           &#8377;{finalPrice.toFixed(2)}
         </Text>

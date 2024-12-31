@@ -1,25 +1,31 @@
 import React, {useState, useEffect} from 'react';
 import {FlatList, Text, View, ActivityIndicator} from 'react-native';
-import {useGetProductsByCategoryQuery} from '../../redux-toolkit/features/products/productApi';
+import {useGetProductsByFilterQuery} from '../../redux-toolkit/features/products/productApi';
 import {Product} from '../../utils/types/productTypes';
 import {useAppSelector} from '../../redux-toolkit/hooks';
 import {RootState} from '../../redux-toolkit/store';
 import ProductCard from './ProductCard'; // Import the ProductCard component
+import {setPage} from '../../redux-toolkit/features/products/productQuerySlice';
 
 const ViewMoreProducts = () => {
-  const {selectedCategory: category} = useAppSelector(
+  const {filterType, filterValue, page} = useAppSelector(
     (state: RootState) => state.productQuery,
   );
 
-  const [page, setPage] = useState(1); // Current page number
-  const [products, setProducts] = useState<Product[]>([]); // Store loaded products
-  const [hasMore, setHasMore] = useState(true); // Check if more products exist
+  const [products, setProducts] = useState<Product[]>([]);
+  const [hasMore, setHasMore] = useState(true);
 
   const {data, error, isLoading, isFetching, isError} =
-    useGetProductsByCategoryQuery(
-      {category: category ?? '', page, limit: 12}, // Query parameters
-      {skip: !category}, // Skip query if no category
+    useGetProductsByFilterQuery(
+      {
+        filterType: filterType ?? '',
+        filterValue: filterValue ?? '',
+        page,
+        limit: 12,
+      },
+      {skip: !filterType},
     );
+  console.log(error);
 
   const totalProducts = data?.totalProducts;
 
@@ -38,7 +44,8 @@ const ViewMoreProducts = () => {
   // Load more products when the user scrolls to the bottom
   const loadMoreProducts = () => {
     if (!isFetching && hasMore) {
-      setPage(prev => prev + 1);
+      // setPage(prev => prev + 1);
+      setPage(page + 1);
     }
   };
 
@@ -80,7 +87,9 @@ const ViewMoreProducts = () => {
   }
 
   // Render ProductCard component for each item
-  const renderItem = ({item}: {item: Product}) => <ProductCard item={item} style="h-80" />;
+  const renderItem = ({item}: {item: Product}) => (
+    <ProductCard item={item} style="h-80" />
+  );
 
   return (
     <FlatList

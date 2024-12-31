@@ -9,6 +9,8 @@ import ReusableImage from '../components/ReusableComponents/ReusableImage';
 import Footer from '../components/Globalcomponets/Footer';
 import {TabsScreenNavigationProp} from '../navigation/navigationTypes';
 import Features from '../components/HomeComponents/Features';
+import HomeBrand from '../components/HomeComponents/HomeBrand';
+import HomeMaterial from '../components/HomeComponents/HomeMaterial';
 
 const HomeScreen: React.FC<{navigation: TabsScreenNavigationProp}> = ({
   navigation,
@@ -31,6 +33,8 @@ const HomeScreen: React.FC<{navigation: TabsScreenNavigationProp}> = ({
           />
         </View>
         <HomeCollection />
+        <HomeBrand />
+        <HomeMaterial />
         <Features />
         <Footer />
       </ScrollView>
