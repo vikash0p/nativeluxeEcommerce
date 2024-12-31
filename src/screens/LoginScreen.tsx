@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, Image,useColorScheme} from 'react-native';
 import {useLoginUserMutation} from '../redux-toolkit/features/auth/authApi';
 import {LoginScreenNavigationProp} from '../navigation/navigationTypes';
 import {Toast} from 'toastify-react-native';
@@ -12,6 +12,8 @@ const LoginScreen = ({navigation}: {navigation: LoginScreenNavigationProp}) => {
   const [credentials, setCredentials] = useState({email: '', password: ''});
   const [isPasswordVisible, setIsPasswordVisible] = useState(false); // State to toggle password visibility
   const [loginUser, {isLoading}] = useLoginUserMutation();
+  const colorScheme = useColorScheme();
+   const isDarkMode = colorScheme === 'dark';
 
   const handleLogin = async () => {
     const {email, password} = credentials;
@@ -62,6 +64,7 @@ const LoginScreen = ({navigation}: {navigation: LoginScreenNavigationProp}) => {
           className="mb-4 text-xl text-gray-700 border-b"
           placeholder="Enter your email"
           value={credentials.email}
+          placeholderTextColor={isDarkMode ? '#303030' : '#303030'}
           onChangeText={text => setCredentials({...credentials, email: text})}
         />
       </View>
@@ -76,6 +79,7 @@ const LoginScreen = ({navigation}: {navigation: LoginScreenNavigationProp}) => {
           placeholder="Enter your password"
           secureTextEntry={!isPasswordVisible} // Toggle visibility
           value={credentials.password}
+          placeholderTextColor={isDarkMode ? '#303030' : '#303030'}
           onChangeText={text =>
             setCredentials({...credentials, password: text})
           }

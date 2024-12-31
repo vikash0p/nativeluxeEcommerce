@@ -12,7 +12,7 @@ interface ProductDetailsProps {
 const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
   const [colors, setColors] = useState(product.color[0]);
   return (
-    <View className="flex-1 bg-white   mb-20">
+    <View className="flex-1 bg-white">
       <View className=" ">
         {/* Product Image */}
         <View className="ps-20 ">

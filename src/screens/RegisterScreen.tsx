@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StatusBar,
   Image,
+  useColorScheme
 } from 'react-native';
 import {useRegisterUserMutation} from '../redux-toolkit/features/auth/authApi';
 import {RegisterScreenNavigationProp} from '../navigation/navigationTypes';
@@ -28,6 +29,8 @@ const RegisterScreen = ({
   });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false); // State to control password visibility
   const [registerUser, {isLoading}] = useRegisterUserMutation();
+  const colorScheme = useColorScheme();
+  const isDarkMode = colorScheme === 'dark';
 
   const handleRegister = async () => {
     // Basic validation
@@ -86,6 +89,7 @@ const RegisterScreen = ({
           className="mb-4 text-xl text-gray-700 border-b"
           placeholder="Enter your full name"
           value={credentials.name}
+          placeholderTextColor={isDarkMode ? '#303030' : '#303030'}
           onChangeText={text => setCredentials({...credentials, name: text})}
         />
       </View>
@@ -99,6 +103,7 @@ const RegisterScreen = ({
           className="mb-4 text-xl text-gray-700 border-b"
           placeholder="Enter your email"
           value={credentials.email}
+          placeholderTextColor={isDarkMode ? '#303030' : '#303030'}
           onChangeText={text => setCredentials({...credentials, email: text})}
         />
       </View>
@@ -112,6 +117,7 @@ const RegisterScreen = ({
           className="mb-4 text-xl text-gray-700 border-b"
           placeholder="Enter your phone number"
           value={credentials.phone}
+          placeholderTextColor={isDarkMode ? '#303030' : '#303030'}
           onChangeText={text => setCredentials({...credentials, phone: text})}
         />
       </View>
@@ -126,6 +132,7 @@ const RegisterScreen = ({
           placeholder="Enter your password"
           secureTextEntry={!isPasswordVisible} // Toggle visibility based on state
           value={credentials.password}
+          placeholderTextColor={isDarkMode ? '#303030' : '#303030'}
           onChangeText={text =>
             setCredentials({...credentials, password: text})
           }
