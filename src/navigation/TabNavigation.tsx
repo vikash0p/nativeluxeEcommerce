@@ -8,13 +8,12 @@ import ProductScreen from '../screens/ProductScreen';
 import UserScreen from '../screens/UserScreen';
 import NotificationScreen from '../screens/NotificationScreen';
 import FavoriteScreen from '../screens/FavoriteScreen';
-import CustomHeader from "../components/ReusableComponents/CustomHeader";
-
+import CustomHeader from '../components/ReusableComponents/CustomHeader';
 
 const Tabs = createBottomTabNavigator();
 
 const TabNavigation = () => {
-  const [unreadNotifications ] = useState(5);
+  const [unreadNotifications] = useState(5);
   const [unreadFavorites] = useState(10);
 
   return (
@@ -76,16 +75,21 @@ const TabNavigation = () => {
       })}>
       <Tabs.Screen name="Home" component={HomeScreen} />
       <Tabs.Screen name="Product" component={ProductScreen} />
-      <Tabs.Screen name="Favorite" component={FavoriteScreen} options={{
-        headerShown: true,
-        header: () => <CustomHeader data={{title: 'Favourites'}} />,
-      }} />
-      <Tabs.Screen name="Notification" component={NotificationScreen}
+      <Tabs.Screen
+        name="Favorite"
+        component={FavoriteScreen}
+        options={{
+          headerShown: true,
+          header: () => <CustomHeader data={{title: 'Favourites'}} />,
+        }}
+      />
+      <Tabs.Screen
+        name="Notification"
+        component={NotificationScreen}
         options={{
           headerShown: true,
           header: () => <CustomHeader data={{title: 'Notifications'}} />,
         }}
-
       />
       <Tabs.Screen name="User" component={UserScreen} />
     </Tabs.Navigator>
