@@ -1,33 +1,28 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/no-unstable-nested-components */
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/HomeScreen';
 import ProductScreen from '../screens/ProductScreen';
-import Icon from 'react-native-vector-icons/Ionicons';
 import UserScreen from '../screens/UserScreen';
 import NotificationScreen from '../screens/NotificationScreen';
 import FavoriteScreen from '../screens/FavoriteScreen';
-import CustomHeader from "../components/ReusableComponents/CustomHeader";
-
 
 const Tabs = createBottomTabNavigator();
 
 const TabNavigation = () => {
-  const [unreadNotifications, setUnreadNotifications] = useState(5); // Example notification count
-  const [unreadFavorites, setUnreadFavorites] = useState(10); // Example notification count
+  const [unreadNotifications ] = useState(5);
+  const [unreadFavorites] = useState(10);
 
   return (
     <Tabs.Navigator
       screenOptions={({route}) => ({
-        headerShown: false,
-        tabBarShowLabel: true,
+        tabBarStyle: styles.tabBarStyle,
         tabBarLabelStyle: styles.tabBarLabelStyle,
+        tabBarShowLabel: true,
         tabBarActiveTintColor: '#4f46e5',
         tabBarInactiveTintColor: 'gray',
-        tabBarStyle: styles.tabBarStyle,
-
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
           switch (route.name) {
@@ -40,7 +35,6 @@ const TabNavigation = () => {
             case 'Favorite':
               iconName = focused ? 'heart' : 'heart-outline';
               break;
-
             case 'Notification':
               iconName = focused ? 'notifications' : 'notifications-outline';
               break;
@@ -51,19 +45,26 @@ const TabNavigation = () => {
               iconName = 'help-circle-outline';
           }
           return (
-            <View style={styles.iconContainer}>
+            <View className="items-center relative">
+              {focused && (
+                <View className="h-[2px] w-16 bg-[#4f46e5] rounded-full absolute -top-2" />
+              )}
               <Icon name={iconName} size={size} color={color} />
-              {/* Badge for Cart Tab */}
 
               {/* Badge for Notification Tab */}
               {route.name === 'Notification' && unreadNotifications > 0 && (
-                <View style={styles.badgeContainer}>
-                  <Text style={styles.badgeText}>{unreadNotifications}</Text>
+                <View className="absolute -top-1 -right-1 bg-red-500 rounded-full w-5 h-5 flex items-center justify-center border border-white">
+                  <Text className="text-white text-xs font-bold">
+                    {unreadNotifications}
+                  </Text>
                 </View>
               )}
+              {/* Badge for Favorite Tab */}
               {route.name === 'Favorite' && unreadFavorites > 0 && (
-                <View style={styles.badgeContainer}>
-                  <Text style={styles.badgeText}>{unreadFavorites}</Text>
+                <View className="absolute -top-1 -right-1 bg-red-500 rounded-full w-5 h-5 flex items-center justify-center border border-white">
+                  <Text className="text-white text-xs font-bold">
+                    {unreadFavorites}
+                  </Text>
                 </View>
               )}
             </View>
@@ -71,62 +72,33 @@ const TabNavigation = () => {
         },
       })}>
       <Tabs.Screen name="Home" component={HomeScreen} />
-      <Tabs.Screen
-        name="Product"
-        component={ProductScreen}
-        options={{tabBarLabel: 'Products'}}
-      />
-      <Tabs.Screen name="Favorite" component={FavoriteScreen} options={{
-        tabBarLabel: 'Favorites',
-        headerShown: true,
-        header: () => <CustomHeader data={{title: 'Favorites'}} />,
-      }} />
+      <Tabs.Screen name="Product" component={ProductScreen} />
+      <Tabs.Screen name="Favorite" component={FavoriteScreen} />
       <Tabs.Screen name="Notification" component={NotificationScreen} />
       <Tabs.Screen name="User" component={UserScreen} />
     </Tabs.Navigator>
   );
 };
 
+export default TabNavigation;
+
+import {StyleSheet} from 'react-native';
+
 const styles = StyleSheet.create({
+  tabBarLabelStyle: {
+    fontSize: 12, // Tailwind "text-sm"
+    fontWeight: '600', // Tailwind "font-semibold"
+    marginBottom: 4, // Tailwind "mb-1"
+  },
   tabBarStyle: {
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#f8f9fa', // Tailwind "bg-gray-100"
     borderTopWidth: 1,
-    borderTopColor: '#d1d5db',
-    paddingBottom: 8,
-    height: 70,
+    borderTopColor: '#d1d5db', // Tailwind "border-gray-300"
+    height: 70, // Tailwind "h-16"
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 5,
   },
-  tabBarLabelStyle: {
-    fontSize: 12,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  iconContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  badgeContainer: {
-    position: 'absolute',
-    right: -10,
-    top: -4,
-    backgroundColor: 'red',
-    borderRadius: 10,
-    width: 18,
-    height: 18,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ffffff',
-  },
-  badgeText: {
-    color: '#ffffff',
-    fontSize: 10,
-    fontWeight: 'bold',
-  },
 });
-
-export default TabNavigation;
