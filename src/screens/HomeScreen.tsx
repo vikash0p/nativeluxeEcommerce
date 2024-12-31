@@ -11,6 +11,7 @@ import {TabsScreenNavigationProp} from '../navigation/navigationTypes';
 import Features from '../components/HomeComponents/Features';
 import HomeBrand from '../components/HomeComponents/HomeBrand';
 import HomeMaterial from '../components/HomeComponents/HomeMaterial';
+import FeaturesList from '../components/HomeComponents/FeaturesList';
 
 const HomeScreen: React.FC<{navigation: TabsScreenNavigationProp}> = ({
   navigation,
@@ -33,6 +34,7 @@ const HomeScreen: React.FC<{navigation: TabsScreenNavigationProp}> = ({
           />
         </View>
         <HomeCollection />
+        <FeaturesList />
         <HomeBrand />
         <HomeMaterial />
         <Features />

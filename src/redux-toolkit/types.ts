@@ -70,3 +70,37 @@ export interface UserProps {
   _id: string;
   phone: number;
 }
+
+
+
+
+export interface ReviewResponse {
+  success: boolean;
+  averageRating: string;
+  message: string;
+  reviews: Review[];
+}
+
+export interface Review {
+  _id: string;
+  userId: User;
+  productId: Product;
+  comment: string;
+  rating: number;
+  date: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
+}
+
+export interface Product {
+  _id: string;
+  title: string;
+  category: string;
+}

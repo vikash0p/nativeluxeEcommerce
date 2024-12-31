@@ -4,12 +4,14 @@ import Feather from 'react-native-vector-icons/Feather';
 import {Product} from '../../redux-toolkit/types';
 import ProductRating from './ProductRating';
 import AdditionalInformation from './AdditionalInformation';
+import {useGetReviewsByProductIdQuery} from '../../redux-toolkit/features/reviews/reviewApi';
 
 interface ProductDetailsProps {
   product: Product;
 }
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
+  const {data} = useGetReviewsByProductIdQuery(product?._id);
   const [colors, setColors] = useState(product.color[0]);
   return (
     <View className="flex-1 bg-white">
@@ -58,7 +60,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
             <Text className="text-md text-green-500 font-semibold pb-3">
               {product.discount}% OFF
             </Text>
-            <ProductRating rating={product.rating} />
+            {
+              data?.averageRating && data.averageRating !== '0' && (
+                <ProductRating rating={Number(data?.averageRating)} />
+              )
+            }
             <View className="flex-row items-center  py-3 bg-white">
               <Text className="text-xl font-semibold text-gray-700">
                 Choose color:

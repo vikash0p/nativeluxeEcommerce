@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,32 +7,36 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {useAppSelector} from '../../redux-toolkit/hooks';
+import {useAppDispatch, useAppSelector} from '../../redux-toolkit/hooks';
 import {RootState} from '../../redux-toolkit/store';
 import {useCreateReviewMutation} from '../../redux-toolkit/features/reviews/reviewApi';
-
-type Review = {
-  rating: number;
-  comment: string;
-};
+import {Alert} from 'react-native';
+import {
+  setComment,
+  setRating,
+} from '../../redux-toolkit/features/reviews/reviewSlice';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../../navigation/navigationTypes';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const UserReview = ({productId}: {productId: string}) => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {isAuthenticated, loading, user} = useAppSelector(
     (state: RootState) => state.auth,
   );
+  const {comment, rating} = useAppSelector((state: RootState) => state.review);
+  const dispatch = useAppDispatch();
 
-  const [createReview, {isLoading, isError,error}] = useCreateReviewMutation();
-
-  console.log('🚀 ~ file: UserReview.tsx:11 ~ productId:', productId);
-  const [rating, setRating] = useState<number>(0); // Star rating (1 to 5)
-  const [comment, setComment] = useState<string>(''); // User comment input
-  const [reviews, setReviews] = useState<Review[]>([]); // List of reviews
+  const [createReview, {isLoading, isError, error}] = useCreateReviewMutation();
 
   // Handle star rating selection
   const handleRating = (value: number): void => {
-    setRating(value);
+    dispatch(setRating(value));
   };
-
+  const handleCommentChange = (text: string) => {
+    dispatch(setComment(text));
+  };
   if (loading) {
     return (
       <View className="flex-1 items-center justify-center bg-gray-100">
@@ -44,22 +48,31 @@ const UserReview = ({productId}: {productId: string}) => {
 
   if (!isAuthenticated) {
     return (
-      <View className="flex-1 items-center justify-center bg-gray-100">
+      <View className="flex-1 items-center justify-center bg-gray-100 py-10">
         <Text className="text-lg font-bold text-gray-800">
-          Please log in to view your profile.
+          Please log in to add a comment
         </Text>
+        <View className="flex-row gap-4 mt-4">
+          <TouchableOpacity
+            className="bg-indigo-600 py-3 px-10 rounded-lg"
+            onPress={() => {navigation.navigate('Login');}}>
+            <Text className="text-white font-semibold text-lg">Login</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
 
   // Add a new review
-  const handleAddReview =  async()  => {
-    if (comment.trim()) {
-      await createReview({productId, rating, comment, userId: user?._id });
-      // Append the new review to the list
-      setReviews([...reviews, {rating, comment}]);
-      setComment(''); // Clear the comment input
-      setRating(0); // Reset the star rating
+  const handleAddReview = async () => {
+    if (comment.trim() === '') {
+      Alert.alert('Please enter a comment.');
+    } else if (rating === 0) {
+      Alert.alert('Please select a rating.');
+    } else {
+      await createReview({productId, rating, comment, userId: user?._id});
+      dispatch(setRating(0));
+      dispatch(setComment(''));
     }
   };
 
@@ -88,11 +101,13 @@ const UserReview = ({productId}: {productId: string}) => {
         className="border border-gray-300 rounded-lg p-2 py-4 mb-4"
         placeholder="Write a comment..."
         value={comment}
-        onChangeText={setComment}
+        onChangeText={handleCommentChange}
         multiline
         maxLength={200} // Optional: Limit comment length
         accessible
         accessibilityLabel="Comment Input"
+        accessibilityHint="Enter your comment here"
+        placeholderTextColor={'#888'}
       />
       {isError && 'data' in error && (
         <Text className="text-red-500">{(error as any).data?.message}</Text>
@@ -107,35 +122,6 @@ const UserReview = ({productId}: {productId: string}) => {
           {isLoading ? 'Adding Review...' : 'Add Review'}{' '}
         </Text>
       </TouchableOpacity>
-      {/* Display Reviews */}
-      {reviews.length > 0 ? (
-        <View>
-          <Text className="text-lg font-semibold mb-2">Comments:</Text>
-          {reviews.map((review, index) => (
-            <View
-              key={index}
-              className="border-b border-gray-200 py-4 flex-row items-start gap-3">
-              {/* Display Star Rating */}
-              <View className="flex-row">
-                {[1, 2, 3, 4, 5].map(star => (
-                  <MaterialIcons
-                    key={star}
-                    name="star"
-                    size={20}
-                    color={star <= review.rating ? 'gold' : 'gray'}
-                  />
-                ))}
-              </View>
-              {/* Display Comment */}
-              <Text className="text-gray-700">{review.comment}</Text>
-            </View>
-          ))}
-        </View>
-      ) : (
-        <Text className="text-gray-500">
-          No reviews yet. Be the first to add one!
-        </Text>
-      )}
     </View>
   );
 };

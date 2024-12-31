@@ -50,7 +50,7 @@ const Features = () => {
 
   return (
     <View className="bg-white p-4">
-      <Text className="text-3xl text-center font-bold text-gray-800 mb-4">
+      <Text className="text-xl text-center font-bold text-gray-800 mb-4">
         Why Choose Us?
       </Text>
       <View className="flex-wrap flex-row justify-between">
@@ -61,7 +61,7 @@ const Features = () => {
             <FontAwesome
               name={feature.icon}
               size={28}
-              color={feature.color}
+              color="#4f46e5"
               className="mr-4"
             />
             <View>

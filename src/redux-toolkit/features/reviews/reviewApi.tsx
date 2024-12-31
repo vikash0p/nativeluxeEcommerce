@@ -1,4 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {ReviewResponse} from '../../types'
 
 const reviewApi = createApi({
   reducerPath: 'reviewApi',
@@ -16,7 +17,7 @@ const reviewApi = createApi({
       providesTags: (result, error, id) => [{type: 'Review', id}],
     }),
     // Fetch reviews by Product ID
-    getReviewsByProductId: builder.query({
+    getReviewsByProductId: builder.query<ReviewResponse, string>({
       query: productId => `/reviews/product/${productId}`,
       providesTags: (result, error, productId) => [{type: 'Review', productId}],
     }),

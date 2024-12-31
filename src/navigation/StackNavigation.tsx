@@ -18,7 +18,7 @@ import {RootState} from '../redux-toolkit/store';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const StackNavigation = () => {
-  const {selectedCategory} = useAppSelector((state: RootState) => state.productQuery);
+  const {filterType , filterValue} = useAppSelector((state: RootState) => state.productQuery);
   const cartData = {
     title: 'Cart',
   };
@@ -40,7 +40,7 @@ const StackNavigation = () => {
           component={ViewMore}
           options={{
             headerShown: true,
-            header: () => <CustomHeader data={{title: selectedCategory}} />,
+            header: () => <CustomHeader data={{title: `${filterType} / ${filterValue.charAt(0).toUpperCase() + filterValue.slice(1)}`}} />,
           }}
         />
         <Stack.Screen

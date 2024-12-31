@@ -36,8 +36,8 @@ const HomeMaterial = () => {
 
   return (
     <View className="flex-1 bg-white p-2">
-      <Text className="text-3xl font-bold text-gray-800 mb-4 text-center">
-        Materials
+      <Text className="text-xl font-bold text-gray-800 mb-4 text-center">
+        Choose Materials
       </Text>
       <View className="flex-row flex-wrap gap-1 justify-between">
         {materials.map((material, index) => (
@@ -49,7 +49,7 @@ const HomeMaterial = () => {
               <MaterialIcons
                 name={getIconName(material)}
                 size={24}
-                color="#4B5563"
+                color="#4f46e5"
               />
               <Text className="text-md font-semibold text-gray-800">
                 {material}

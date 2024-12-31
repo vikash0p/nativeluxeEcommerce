@@ -4,12 +4,14 @@ import authReducer from './features/auth/authSlice';
 import productApi from './features/products/productApi';
 
 import productQueryReducer from './features/products/productQuerySlice';
+import reviewReducer from './features/reviews/reviewSlice';
 import reviewApi from './features/reviews/reviewApi';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     productQuery: productQueryReducer,
+    review: reviewReducer,
     [productApi.reducerPath]: productApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [reviewApi.reducerPath]: reviewApi.reducer,

@@ -6,7 +6,7 @@ import React from 'react';
 const AddToCart = () => {
   return (
 
-     <View className="flex-row justify-between gap-5">
+     <View className="flex-row justify-between gap-5 bg-white">
         <TouchableOpacity
           className="bg-black py-4 rounded-lg items-center shadow-lg w-24  "
           accessible

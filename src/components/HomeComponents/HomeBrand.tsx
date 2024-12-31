@@ -18,7 +18,7 @@ const HomeBrand = () => {
 
   return (
     <View className="flex-1 bg-white p-2">
-      <Text className="text-3xl font-bold text-gray-800 mb-4 text-center">
+      <Text className="text-xl font-bold text-gray-800 mb-4 text-center">
         Popular Brands
       </Text>
       <View className="flex-row flex-wrap gap-1 justify-between">
@@ -31,7 +31,7 @@ const HomeBrand = () => {
               <MaterialIcons
                 name="storefront"
                 size={24}
-                color="#4B5563"
+                color="#4f46e5"
                 className=""
               />
               <Text className="text-md font-semibold text-gray-800">
