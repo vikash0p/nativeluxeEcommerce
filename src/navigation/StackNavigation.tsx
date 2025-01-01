@@ -18,21 +18,39 @@ import {RootState} from '../redux-toolkit/store';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const StackNavigation = () => {
-  const {filterType , filterValue} = useAppSelector((state: RootState) => state.productQuery);
+  const {filterType, filterValue} = useAppSelector(
+    (state: RootState) => state.productQuery,
+  );
+  const {isAuthenticated} = useAppSelector(
+    (state: RootState) => state.auth,
+  );
+  console.log(
+    '🚀 ~ file: StackNavigation.tsx:23 ~ isAuthenticated:',
+    isAuthenticated,
+  );
+
   const cartData = {
     title: 'Cart',
   };
   const singleProductData = {
     title: 'Product Details',
   };
+
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Welcome"
+        initialRouteName={isAuthenticated ? 'Tabs' : 'Welcome'}
         screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        {/* Conditionally render authentication-related screens */}
+        {!isAuthenticated && (
+          <>
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          </>
+        )}
+
+        {/* Render authenticated screens */}
         <Stack.Screen name="Tabs" component={TabNavigation} />
         <Stack.Screen name="Search" component={SearchScreen} />
         <Stack.Screen
@@ -40,7 +58,15 @@ const StackNavigation = () => {
           component={ViewMore}
           options={{
             headerShown: true,
-            header: () => <CustomHeader data={{title: `${filterType} / ${filterValue.charAt(0).toUpperCase() + filterValue.slice(1)}`}} />,
+            header: () => (
+              <CustomHeader
+                data={{
+                  title: `${filterType} / ${filterValue
+                    .charAt(0)
+                    .toUpperCase()}${filterValue.slice(1)}`,
+                }}
+              />
+            ),
           }}
         />
         <Stack.Screen

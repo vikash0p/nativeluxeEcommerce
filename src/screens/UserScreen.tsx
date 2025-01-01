@@ -1,30 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, ScrollView, ActivityIndicator} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LogoutButton from '../components/ReusableComponents/LogoutButton';
 import {useAppSelector} from '../redux-toolkit/hooks';
 import {RootState} from '../redux-toolkit/store';
+import {RootStackParamList} from '../navigation/navigationTypes';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
 
 const UserScreen = () => {
   const {user, isAuthenticated, loading} = useAppSelector(
     (state: RootState) => state.auth,
   );
 
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  useEffect(() => {
+    if (!isAuthenticated && !loading) {
+      navigation.replace('Login'); // Redirect to Login screen
+    }
+  }, [isAuthenticated, loading, navigation]);
+
   if (loading) {
     return (
       <View className="flex-1 items-center justify-center bg-gray-100">
         <ActivityIndicator size="large" color="#4f46e5" />
         <Text className="mt-4 text-lg text-gray-600">Loading profile...</Text>
-      </View>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <View className="flex-1 items-center justify-center bg-gray-100">
-        <Text className="text-lg font-bold text-gray-800">
-          Please log in to view your profile.
-        </Text>
       </View>
     );
   }
