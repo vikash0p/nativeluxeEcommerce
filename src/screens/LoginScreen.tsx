@@ -23,8 +23,7 @@ const LoginScreen = ({navigation}: {navigation: LoginScreenNavigationProp}) => {
       return;
     }
     try {
-      const response = await loginUser(credentials).unwrap();
-      console.log('🚀 ~ file: LoginScreen.tsx:12 ~ response:', response);
+       await loginUser(credentials).unwrap();
       Toast.success('Login successful');
       navigation.reset({
         index: 0,

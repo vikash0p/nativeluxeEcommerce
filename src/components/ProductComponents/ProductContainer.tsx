@@ -68,7 +68,6 @@ const ProductContainer: React.FC = () => {
     );
   }
 
-  console.log('productContainer', +data?.totalProducts);
   return (
     <View className="flex-1 bg-white">
       {/* Header Section */}

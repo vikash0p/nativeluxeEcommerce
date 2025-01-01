@@ -35,7 +35,6 @@ interface CommentProps {
 const Comments: React.FC<CommentProps> = ({productId}) => {
   const {data, error, isError, isLoading} =
     useGetReviewsByProductIdQuery(productId);
-  console.log('🚀 ~ file: Comments.tsx:36 ~ data:', data?.averageRating);
 
   const colors = [
     '#FF5733',
@@ -50,7 +49,6 @@ const Comments: React.FC<CommentProps> = ({productId}) => {
     '#914DFF',
   ];
 
-  console.log();
   if (isLoading) {
     return (
       <View className="flex-1 justify-center items-center bg-gray-100">

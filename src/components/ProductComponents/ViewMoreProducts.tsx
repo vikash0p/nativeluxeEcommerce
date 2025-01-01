@@ -25,7 +25,6 @@ const ViewMoreProducts = () => {
       },
       {skip: !filterType},
     );
-  console.log(error);
 
   const totalProducts = data?.totalProducts;
 

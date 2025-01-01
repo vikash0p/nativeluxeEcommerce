@@ -56,7 +56,6 @@ const HomeCategory = () => {
     }
 
     const filterCategoryFunction = (cat: string) => {
-      console.log('🚀 ~ file: HomeCategory.tsx:60 ~ cat:', cat);
       dispatch(setFilter({filterType: 'category', filterValue: cat}));
       navigation.navigate('ViewMore');
     };

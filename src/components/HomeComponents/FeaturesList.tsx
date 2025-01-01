@@ -21,7 +21,7 @@ const features: Feature[] = [
 
 const FeaturesList: React.FC = () => {
   return (
-    <View className="p-4 bg-white rounded-lg shadow-lg">
+    <View className="p-4 bg-white">
       <Text className="text-xl font-bold text-gray-800 mb-6 text-center">
         Product Features
       </Text>

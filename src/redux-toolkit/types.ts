@@ -26,6 +26,8 @@ export interface Product {
   brand: string;
   weight: number;
   location: string[];
+  views: number;
+  sales: number;
   dimension: Dimension;
 }
 

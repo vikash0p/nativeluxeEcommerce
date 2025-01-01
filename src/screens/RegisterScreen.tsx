@@ -45,8 +45,7 @@ const RegisterScreen = ({
     }
 
     try {
-      const response = await registerUser(credentials).unwrap();
-      console.log('🚀 ~ file: RegisterScreen.tsx:12 ~ response:', response);
+       await registerUser(credentials).unwrap();
       Toast.success('Registration successful');
       navigation.navigate('Login');
     } catch (error) {
