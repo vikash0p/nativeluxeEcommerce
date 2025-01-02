@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, Text, ScrollView} from 'react-native';
-import {useGetNewArrivalProductsQuery} from '../../redux-toolkit/features/products/productApi';
+import {useGetBestSellerProductsQuery} from '../../redux-toolkit/features/products/productApi';
 import {Product} from '../../redux-toolkit/types';
 import HomeProductCard from './HomeProductCard';
 
-const NewArrivalProducts = () => {
-  const {data, isLoading} = useGetNewArrivalProductsQuery({});
+const BestSellerProduct = () => {
+  const {data, isLoading} = useGetBestSellerProductsQuery({});
 
   if ((!data || !data.products.length) && (!data || isLoading)) {
     return (
@@ -18,7 +18,7 @@ const NewArrivalProducts = () => {
   return (
     <View className="flex-1 p-2">
       <Text className="text-xl font-bold text-gray-800 mb-4 text-center">
-        New Arrival Products
+        Best Seller Products
       </Text>
       <ScrollView
         horizontal
@@ -26,11 +26,15 @@ const NewArrivalProducts = () => {
         bounces={false}
         className="flex flex-row">
         {data.products.map((product: Product) => (
-          <HomeProductCard product={product} key={product._id} title={'NEW'} />
+          <HomeProductCard
+            product={product}
+            key={product._id}
+            title={product.sales}
+          />
         ))}
       </ScrollView>
     </View>
   );
 };
 
-export default NewArrivalProducts;
+export default BestSellerProduct;

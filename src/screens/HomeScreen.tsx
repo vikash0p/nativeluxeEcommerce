@@ -13,6 +13,8 @@ import HomeBrand from '../components/HomeComponents/HomeBrand';
 import HomeMaterial from '../components/HomeComponents/HomeMaterial';
 import FeaturesList from '../components/HomeComponents/FeaturesList';
 import NewArrivalProducts from '../components/HomeComponents/NewArrivalProducts';
+import TrendingProduct from '../components/HomeComponents/TrendingProduct';
+import BestSellerProduct from '../components/HomeComponents/BestSellerProduct';
 
 const HomeScreen: React.FC<{navigation: TabsScreenNavigationProp}> = ({
   navigation,
@@ -37,6 +39,8 @@ const HomeScreen: React.FC<{navigation: TabsScreenNavigationProp}> = ({
         <HomeCollection />
         <FeaturesList />
         <NewArrivalProducts />
+        <TrendingProduct />
+        <BestSellerProduct />
         <HomeBrand />
         <HomeMaterial />
         <Features />

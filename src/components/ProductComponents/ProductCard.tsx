@@ -10,8 +10,7 @@ const ProductCard: React.FC<{item: Product; style: string}> = ({
   item,
   style,
 }) => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [incrementProductViews] = useIncrementProductViewsMutation();
   const price = item.originalPrice * 90;
   const finalPrice = item.finalPrice * 90;
