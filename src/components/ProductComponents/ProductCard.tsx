@@ -4,18 +4,33 @@ import {Product} from '../../utils/types/productTypes';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigation/navigationTypes';
+import {useIncrementProductViewsMutation} from '../../redux-toolkit/features/products/productApi';
 
-const ProductCard: React.FC<{item: Product; style: string}> = ({item,style}) => {
-
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+const ProductCard: React.FC<{item: Product; style: string}> = ({
+  item,
+  style,
+}) => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const [incrementProductViews] = useIncrementProductViewsMutation();
   const price = item.originalPrice * 90;
   const finalPrice = item.finalPrice * 90;
+
+  const handleProductClick = async (id: string) => {
+    try {
+      await incrementProductViews(id).unwrap();
+      console.log('View incremented for product', id);
+    } catch (error) {
+      console.error('Failed to increment views:', error);
+    }
+  };
   return (
     <View className="bg-gray-200 min-h-80 rounded-lg p-4">
       <TouchableOpacity
         activeOpacity={0.5}
         onPress={() => {
           navigation.navigate('SingleProduct', {itemId: item._id});
+          handleProductClick(item._id);
         }}>
         <Image
           source={{uri: item.image}}

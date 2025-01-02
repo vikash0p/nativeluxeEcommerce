@@ -95,6 +95,15 @@ const productApi = createApi({
       }),
       invalidatesTags: ['Product'],
     }),
+    getTrendingProducts: builder.query({
+      query: (limit = 10) => `/furniture/trending?limit=${limit}`,
+    }),
+    incrementProductViews: builder.mutation({
+      query: id => ({
+        url: `/furniture/products/${id}/views`,
+        method: 'PATCH',
+      }),
+    }),
   }),
 });
 
@@ -107,5 +116,7 @@ export const {
   useGetProductsByCategoryQuery,
   useGetProductsByFilterQuery,
   useGetNewArrivalProductsQuery,
+  useGetTrendingProductsQuery,
+  useIncrementProductViewsMutation,
 } = productApi;
 export default productApi;
