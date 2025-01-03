@@ -13,6 +13,7 @@ import ProductRating from './ProductRating';
 import AdditionalInformation from './AdditionalInformation';
 import {Product} from '../../redux-toolkit/types';
 import {RootState} from '../../redux-toolkit/store';
+import {useGetCartQuery} from '../../redux-toolkit/features/cart/cartApi';
 
 interface ProductDetailsProps {
   product: Product;
@@ -20,8 +21,15 @@ interface ProductDetailsProps {
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
   const dispatch = useAppDispatch();
+  const {user} = useAppSelector((state: RootState) => state.auth);
   const {colors, quantity} = useAppSelector((state: RootState) => state.cart);
   const {data} = useGetReviewsByProductIdQuery(product?._id);
+  const {data: cart} = useGetCartQuery(user?._id ?? '');
+  console.log('🚀 ~ file: ProductDetails.tsx:27 ~ cart:', cart);
+
+  const cartItem = cart?.items?.find(item => item.productId === product._id);
+  const cartQuantity = cartItem?.quantity || 0;
+  console.log('🚀 ~ file: ProductDetails.tsx:33 ~ cartQuantity:', cartQuantity);
 
   // Automatically set the first color
   useEffect(() => {
@@ -83,7 +91,10 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
               </View>
 
               {/* Quantity */}
-              <View className="flex-row items-center gap-3">
+              <View
+                className={`flex-row items-center gap-3 ${
+                  cartQuantity >= 5 ? 'hidden' : ''
+                }`}>
                 <TouchableOpacity
                   onPress={() => dispatch(removeFromCart(1))}
                   disabled={quantity <= 1}>

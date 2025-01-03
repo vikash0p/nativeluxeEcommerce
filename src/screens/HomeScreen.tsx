@@ -15,10 +15,10 @@ import FeaturesList from '../components/HomeComponents/FeaturesList';
 import NewArrivalProducts from '../components/HomeComponents/NewArrivalProducts';
 import TrendingProduct from '../components/HomeComponents/TrendingProduct';
 import BestSellerProduct from '../components/HomeComponents/BestSellerProduct';
-
-const HomeScreen: React.FC<{navigation: TabsScreenNavigationProp}> = ({
-  navigation,
-}) => {
+import {useAppSelector} from '../redux-toolkit/hooks';
+import {RootState} from '../redux-toolkit/store';
+const HomeScreen: React.FC<{navigation: TabsScreenNavigationProp}> = ({ navigation}) => {
+  const {isAuthenticated} = useAppSelector((state: RootState) => state.auth);
   return (
     <SafeAreaView className="flex-1 bg-white">
       <HomeTopBar navigation={navigation} />
@@ -26,11 +26,14 @@ const HomeScreen: React.FC<{navigation: TabsScreenNavigationProp}> = ({
         <HomeCarousel />
         <HomeCategory />
         <View>
-          <ReusableImage
-            image={require('../asset/images/banner/banner16.jpg')}
-            styles="w-full h-24 rounded-md"
-            navigation={() => navigation.navigate('Register')}
-          />
+          {!isAuthenticated && (
+            <ReusableImage
+              image={require('../asset/images/banner/banner16.jpg')}
+              styles="w-full h-24 rounded-md"
+              navigation={() => navigation.navigate('Register')}
+            />
+          )}
+
           <ReusableImage
             image={require('../asset/images/banner/banner17.jpg')}
             styles="w-full h-24 rounded-md"

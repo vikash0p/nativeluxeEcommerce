@@ -25,19 +25,19 @@ const cartSlice = createSlice({
     removeFromCart: (state, action: PayloadAction<number>) => {
       state.quantity -= action.payload;
     },
+    resetCartQuantity: state => {
+      state.quantity = initialState.quantity;
+    },
 
     // Add color
     addColor: (state, action: PayloadAction<string>) => {
       state.colors = action.payload;
     },
-
-
-
   },
 });
 
 // Export actions
-export const {addToCart, removeFromCart, addColor} = cartSlice.actions;
+export const {addToCart, removeFromCart, addColor,resetCartQuantity} = cartSlice.actions;
 
 // Export reducer
 export default cartSlice.reducer;
