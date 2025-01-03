@@ -18,7 +18,7 @@ export type CartScreenNavigationProp = NativeStackNavigationProp<RootStackParamL
 export type TabsScreenNavigationProp = NativeStackNavigationProp< RootStackParamList, 'Tabs'>;
 export type SearchScreenNavigationProp = NativeStackNavigationProp< RootStackParamList, 'Search'>;
 export type ViewMoreScreenNavigationProp = NativeStackNavigationProp< RootStackParamList, 'ViewMore'>;
-export type SingleScreenNavigationProp = NativeStackNavigationProp< RootStackParamList, 'SingleProduct'>;
+export type SingleScreenNavigationProp = NativeStackNavigationProp< RootStackParamList, 'SingleProduct' >;
 
 
 

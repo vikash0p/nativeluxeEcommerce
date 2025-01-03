@@ -1,26 +1,43 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
-import {Product} from '../../redux-toolkit/types';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {useAppDispatch, useAppSelector} from '../../redux-toolkit/hooks';
+import {
+  addColor,
+  addToCart,
+  removeFromCart,
+} from '../../redux-toolkit/features/cart/cartSlice';
+import {useGetReviewsByProductIdQuery} from '../../redux-toolkit/features/reviews/reviewApi';
 import ProductRating from './ProductRating';
 import AdditionalInformation from './AdditionalInformation';
-import {useGetReviewsByProductIdQuery} from '../../redux-toolkit/features/reviews/reviewApi';
+import {Product} from '../../redux-toolkit/types';
+import {RootState} from '../../redux-toolkit/store';
 
 interface ProductDetailsProps {
   product: Product;
 }
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
+  const dispatch = useAppDispatch();
+  const {colors, quantity} = useAppSelector((state: RootState) => state.cart);
   const {data} = useGetReviewsByProductIdQuery(product?._id);
-  const [colors, setColors] = useState(product.color[0]);
+
+  // Automatically set the first color
+  useEffect(() => {
+    if (product.color && product.color.length > 0) {
+      dispatch(addColor(product.color[0]));
+    }
+  }, [product.color, dispatch]);
+
   return (
     <View className="flex-1 bg-white">
-      <View className=" ">
+      <View>
         {/* Product Image */}
-        <View className="ps-20 ">
+        <View className="ps-20">
           <Image
             source={{uri: product.image}}
-            className="w-full h-[450px] rounded-bl-3xl  mb-4 "
+            className="w-full h-[450px] rounded-bl-3xl mb-4"
             resizeMode="cover"
           />
           <View className="flex-col gap-6 bg-gray-300 rounded-full py-16 items-center w-20 absolute top-20 left-10">
@@ -28,7 +45,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
               <TouchableOpacity
                 key={index}
                 className="flex-row items-center mb-2"
-                onPress={() => setColors(color)}>
+                onPress={() => dispatch(addColor(color))}>
                 <Text
                   className={`text-lg font-semibold text-gray-800 ml-2 rounded-full w-12 h-12 border ${
                     colors === color ? 'border-2 border-[#4f46e5]' : ''
@@ -40,6 +57,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
           </View>
         </View>
 
+        {/* Rest of the component */}
         <View className="p-4">
           {/* Product Title & Brand */}
           <View className="mb-4">
@@ -50,22 +68,55 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
           </View>
 
           {/* Price Section */}
-          <View className="mb-4">
-            <Text className="text-2xl font-bold text-indigo-600">
-              ₹{product.finalPrice * 90}{' '}
-              <Text className="text-sm line-through text-red-500">
-                ₹{product.originalPrice * 90}
-              </Text>
-            </Text>
-            <Text className="text-md text-green-500 font-semibold pb-3">
-              {product.discount}% OFF
-            </Text>
-            {
-              data?.averageRating && data.averageRating !== '0' && (
+          <View>
+            <View className="mb-4 flex-row items-center justify-between px-2">
+              <View>
+                <Text className="text-2xl font-bold text-indigo-600">
+                  ₹{product.finalPrice * 90}{' '}
+                  <Text className="text-sm line-through text-red-500">
+                    ₹{product.originalPrice * 90}
+                  </Text>
+                </Text>
+                <Text className="text-md text-green-500 font-semibold pb-3">
+                  {product.discount}% OFF
+                </Text>
+              </View>
+
+              {/* Quantity */}
+              <View className="flex-row items-center gap-3">
+                <TouchableOpacity
+                  onPress={() => dispatch(removeFromCart(1))}
+                  disabled={quantity <= 1}>
+                  <AntDesign
+                    name="minussquare"
+                    size={40}
+                    color={quantity > 1 ? '#4f46e5' : 'gray'}
+                  />
+                </TouchableOpacity>
+                <Text className="text-4xl font-semibold text-gray-700">
+                  {quantity}
+                </Text>
+                <TouchableOpacity
+                  disabled={quantity >= 5}
+                  onPress={() => dispatch(addToCart(1))}>
+                  <AntDesign
+                    name="plussquare"
+                    size={40}
+                    color={quantity < 5 ? '#4f46e5' : 'gray'}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {/* Product Rating */}
+            <View>
+              {data?.averageRating && data.averageRating !== '0' && (
                 <ProductRating rating={Number(data?.averageRating)} />
-              )
-            }
-            <View className="flex-row items-center  py-3 bg-white">
+              )}
+            </View>
+
+            {/* Selected Color */}
+            <View className="flex-row items-center py-3 bg-white">
               <Text className="text-xl font-semibold text-gray-700">
                 Choose color:
               </Text>
