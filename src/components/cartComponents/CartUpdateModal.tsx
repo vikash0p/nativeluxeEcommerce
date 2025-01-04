@@ -12,7 +12,7 @@ interface CartUpdateModalProps {
 }
 
 const CartUpdateModal: React.FC<CartUpdateModalProps> = ({isVisible,onClose,item}) => {
-  console.log('🚀 ~ file: CartUpdateModal.tsx:15 ~ item:', item.id);
+  // console.log('🚀 ~ file: CartUpdateModal.tsx:15 ~ item:', item.id);
   const [quantity, setQuantity] = useState(item.quantity);
   const [color, setColor] = useState(item.color);
 

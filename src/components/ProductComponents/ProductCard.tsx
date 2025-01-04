@@ -18,7 +18,7 @@ const ProductCard: React.FC<{item: Product; style: string}> = ({
   const handleProductClick = async (id: string) => {
     try {
       await incrementProductViews(id).unwrap();
-      console.log('View incremented for product', id);
+      // console.log('View incremented for product', id);
     } catch (error) {
       console.error('Failed to increment views:', error);
     }

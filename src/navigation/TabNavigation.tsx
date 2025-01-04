@@ -9,12 +9,25 @@ import UserScreen from '../screens/UserScreen';
 import NotificationScreen from '../screens/NotificationScreen';
 import FavoriteScreen from '../screens/FavoriteScreen';
 import CustomHeader from '../components/ReusableComponents/CustomHeader';
-
+import {RootState} from '../redux-toolkit/store';
 const Tabs = createBottomTabNavigator();
 
 const TabNavigation = () => {
   const [unreadNotifications] = useState(5);
-  const [unreadFavorites] = useState(10);
+
+  const {user} = useAppSelector((state: RootState) => state.auth);
+
+  const {data,refetch} = useGetWishlistQuery(user?._id ?? '',{
+    skip: !user?._id,
+  });
+  console.log('🚀 ~ file: TabNavigation.tsx:42 ~ data:', data?.items?.length);
+
+React.useEffect(() => {
+  if (user?._id) {
+    refetch(); // Ensure cart data is fetched when user ID changes
+  }
+}, [user?._id, refetch]);
+
 
   return (
     <Tabs.Navigator
@@ -62,10 +75,10 @@ const TabNavigation = () => {
                 </View>
               )}
               {/* Badge for Favorite Tab */}
-              {route.name === 'Favorite' && unreadFavorites > 0 && (
+              {route.name === 'Favorite' && (data?.items?.length ?? 0) > 0 && (
                 <View className="absolute -top-1 -right-1 bg-red-500 rounded-full w-5 h-5 flex items-center justify-center border border-white">
                   <Text className="text-white text-xs font-bold">
-                    {unreadFavorites}
+                    {data?.items?.length ?? 0}
                   </Text>
                 </View>
               )}
@@ -80,7 +93,7 @@ const TabNavigation = () => {
         component={FavoriteScreen}
         options={{
           headerShown: true,
-          header: () => <CustomHeader data={{title: 'Favourites'}} />,
+          header: () => <CustomHeader data={{title: 'Wishlist'}} />,
         }}
       />
       <Tabs.Screen
@@ -99,6 +112,8 @@ const TabNavigation = () => {
 export default TabNavigation;
 
 import {StyleSheet} from 'react-native';
+import {useAppSelector} from '../redux-toolkit/hooks';
+import {useGetWishlistQuery} from '../redux-toolkit/features/wishlist/wishlistApi';
 
 const styles = StyleSheet.create({
   tabBarLabelStyle: {

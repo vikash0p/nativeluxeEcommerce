@@ -25,11 +25,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
   const {colors, quantity} = useAppSelector((state: RootState) => state.cart);
   const {data} = useGetReviewsByProductIdQuery(product?._id);
   const {data: cart} = useGetCartQuery(user?._id ?? '');
-  console.log('🚀 ~ file: ProductDetails.tsx:27 ~ cart:', cart);
+  // console.log('🚀 ~ file: ProductDetails.tsx:27 ~ cart:', cart);
 
   const cartItem = cart?.items?.find(item => item.productId === product._id);
   const cartQuantity = cartItem?.quantity || 0;
-  console.log('🚀 ~ file: ProductDetails.tsx:33 ~ cartQuantity:', cartQuantity);
+  // console.log('🚀 ~ file: ProductDetails.tsx:33 ~ cartQuantity:', cartQuantity);
 
   // Automatically set the first color
   useEffect(() => {

@@ -12,7 +12,11 @@ const HomeTopBar: React.FC<{
   navigation: NavigationProp<RootStackParamList>;
 }> = ({navigation}) => {
   const {user} = useAppSelector((state: RootState) => state.auth);
-  const {data} = useGetCartQuery(user?._id ?? '');
+  const {data} = useGetCartQuery(user?._id ?? '', {
+    skip: !user?._id,
+    refetchOnMountOrArgChange: true,
+    refetchOnReconnect: true,
+  });
 
   return (
     <View className="w-screen flex-row items-center justify-between px-3 py-3 bg-[#4f46e5] shadow-md rounded-b-3xl">

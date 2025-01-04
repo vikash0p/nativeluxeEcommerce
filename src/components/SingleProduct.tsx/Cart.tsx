@@ -16,22 +16,22 @@ const Cart = ({productId}: {productId: string}) => {
   const dispatch = useAppDispatch();
 
   const {data} = useGetCartQuery(user?._id ?? '');
-  console.log('🚀 ~ file: Cart.tsx:19 ~ data:', data?.totalQuantity);
+  // console.log('🚀 ~ file: Cart.tsx:19 ~ data:', data?.totalQuantity);
   const cartItem = data?.items?.find(item => item.productId === productId);
   const cartQuantity = cartItem?.quantity || 0;
 
-  console.log('🚀 ~ file: Cart.tsx:17 ~ cartQuantity:', cartQuantity);
+  // console.log('🚀 ~ file: Cart.tsx:17 ~ cartQuantity:', cartQuantity);
 
   const handleAddToCart = async () => {
     try {
-      const response = await addItemToCart({
+      await addItemToCart({
         userId: user?._id ?? '',
         productId,
         quantity,
         color: colors,
       }).unwrap();
 
-      console.log('Item added successfully:', response);
+      // console.log('Item added successfully:', response);
       dispatch(resetCartQuantity());
       Toast.success('Item added to cart successfully.');
     } catch (error: any) {

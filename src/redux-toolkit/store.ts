@@ -8,6 +8,7 @@ import productQueryReducer from './features/products/productQuerySlice';
 import reviewReducer from './features/reviews/reviewSlice';
 import reviewApi from './features/reviews/reviewApi';
 import cartApi from './features/cart/cartApi';
+import wishlistApi from './features/wishlist/wishlistApi';
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [reviewApi.reducerPath]: reviewApi.reducer,
     [cartApi.reducerPath]: cartApi.reducer,
+    [wishlistApi.reducerPath]: wishlistApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
@@ -26,6 +28,7 @@ export const store = configureStore({
       productApi.middleware,
       reviewApi.middleware,
       cartApi.middleware,
+      wishlistApi.middleware,
     ),
 });
 

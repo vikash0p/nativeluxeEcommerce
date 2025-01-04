@@ -6,7 +6,7 @@ import Cart from './Cart';
 const AddToCart = ({productId}:{productId: string}) => {
   return (
     <View className="flex-row justify-between gap-5 bg-white">
-      <Wishlist />
+      <Wishlist productId={productId} />
       <Cart productId={productId} />
     </View>
   );
