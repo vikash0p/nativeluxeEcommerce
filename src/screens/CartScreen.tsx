@@ -54,7 +54,6 @@ const CartScreen = () => {
             <Text className="text-center text-lg text-black font-semibold">
               Your cart is empty. Start shopping now!
             </Text>
-
           </View>
         )}
       </View>

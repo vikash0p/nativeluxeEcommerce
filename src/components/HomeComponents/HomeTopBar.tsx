@@ -32,11 +32,14 @@ const HomeTopBar: React.FC<{
           accessibilityHint="Navigate to the cart page">
           <Icon name="cart-outline" size={28} color="#fff" />
         </TouchableOpacity>
-        <View className="absolute -top-1 -right-2 bg-white rounded-full w-5 h-5 items-center justify-center">
-          <Text className="text-[#4f46e5] text-xs font-bold">
-            {data?.totalQuantity || 0}
-          </Text>
-        </View>
+
+        {data?.totalQuantity && data.totalQuantity > 0 && (
+          <View className="absolute -top-1 -right-2 bg-white rounded-full w-5 h-5 items-center justify-center">
+            <Text className="text-[#4f46e5] text-xs font-bold">
+              {data?.totalQuantity || 0}
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   );

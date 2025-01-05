@@ -39,7 +39,7 @@ const CartCard: React.FC<CartCardProps> = ({item}) => {
       {/* Product Info */}
       <View className="flex-1 ml-4">
         <View className="flex-row items-center mb-2">
-          <Text
+          <View
             className="w-5 h-5 rounded-full border border-gray-300"
             style={{backgroundColor: item.color}}
           />
