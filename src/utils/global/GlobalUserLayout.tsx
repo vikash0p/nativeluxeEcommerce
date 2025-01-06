@@ -32,6 +32,21 @@ const GlobalUserLayout: React.FC<GlobalUserLayoutProps> = ({children}) => {
     }
   }, [data, isLoading, dispatch]);
 
+ useEffect(() => {
+   const timeout = setTimeout(() => {
+     if (isLoading) {
+       console.warn('Loading is taking longer than expected.');
+       // Optionally dispatch an action or update a state to show a timeout message
+       dispatch(setLoading(false)); // Stop the loader
+       dispatch(logout()); // Perform a logout or take another action
+     }
+   }, 10000); // 10 seconds timeout
+
+   // Cleanup the timeout when loading completes or on unmount
+   return () => clearTimeout(timeout);
+ }, [isLoading, dispatch]);
+
+
   return <>{children}</>;
 };
 

@@ -9,9 +9,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 
 const UserScreen = () => {
-  const {user, isAuthenticated, loading} = useAppSelector(
-    (state: RootState) => state.auth,
-  );
+  const {user, isAuthenticated, loading} = useAppSelector((state: RootState) => state.auth);
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
