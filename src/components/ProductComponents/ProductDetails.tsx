@@ -14,7 +14,7 @@ import AdditionalInformation from './AdditionalInformation';
 import {Product} from '../../redux-toolkit/types';
 import {RootState} from '../../redux-toolkit/store';
 import {useGetCartQuery} from '../../redux-toolkit/features/cart/cartApi';
-import {useIncrementProductSalesMutation} from '../../redux-toolkit/features/products/productApi';
+import {useIncrementSalesMutation} from '../../redux-toolkit/features/sales/salesApi';
 
 interface ProductDetailsProps {
   product: Product;
@@ -30,10 +30,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
 
   const cartItem = cart?.items?.find(item => item.productId === product._id);
   const cartQuantity = cartItem?.quantity || 0;
-  // console.log('🚀 ~ file: ProductDetails.tsx:33 ~ cartQuantity:', cartQuantity);
 
-  const [incrementProductSales] = useIncrementProductSalesMutation();
-
+  const [incrementSales] = useIncrementSalesMutation();
   // Automatically set the first color
   useEffect(() => {
     if (product.color && product.color.length > 0) {
@@ -47,7 +45,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
 
   const addFromCartHandler = async () => {
     dispatch(addToCart(1));
-    await incrementProductSales(product._id).unwrap();
+
+    await incrementSales({
+      productId: product._id,
+      userId: user?._id ?? '',
+    });
   };
 
   return (

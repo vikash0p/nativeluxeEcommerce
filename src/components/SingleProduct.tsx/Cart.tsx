@@ -8,7 +8,7 @@ import {
 } from '../../redux-toolkit/features/cart/cartApi';
 import {Toast} from 'toastify-react-native';
 import {resetCartQuantity} from '../../redux-toolkit/features/cart/cartSlice';
-import {useIncrementProductSalesMutation} from '../../redux-toolkit/features/products/productApi';
+import { useIncrementSalesMutation } from "../../redux-toolkit/features/sales/salesApi";
 
 const Cart = ({productId}: {productId: string}) => {
   const {user} = useAppSelector((state: RootState) => state.auth);
@@ -17,13 +17,10 @@ const Cart = ({productId}: {productId: string}) => {
   const dispatch = useAppDispatch();
 
   const {data} = useGetCartQuery(user?._id ?? '');
-  // console.log('🚀 ~ file: Cart.tsx:19 ~ data:', data?.totalQuantity);
   const cartItem = data?.items?.find(item => item.productId === productId);
   const cartQuantity = cartItem?.quantity || 0;
 
-  // console.log('🚀 ~ file: Cart.tsx:17 ~ cartQuantity:', cartQuantity);
-
-  const [incrementProductSales] = useIncrementProductSalesMutation();
+  const [incrementSales] = useIncrementSalesMutation();
 
   const handleAddToCart = async () => {
     try {
@@ -34,10 +31,13 @@ const Cart = ({productId}: {productId: string}) => {
         color: colors,
       }).unwrap();
 
-      // console.log('Item added successfully:', response);
       dispatch(resetCartQuantity());
 
-      await incrementProductSales(productId).unwrap();
+      await incrementSales({
+        productId,
+        userId: user?._id ?? '',
+      }).unwrap();
+
       Toast.success('Item added to cart successfully.');
     } catch (error: any) {
       console.error('Error adding item to cart:', error);

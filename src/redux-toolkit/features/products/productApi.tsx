@@ -109,24 +109,8 @@ const productApi = createApi({
     getBestSellerProducts: builder.query({
       query: () => '/furniture/bestsellers',
     }),
-    incrementProductSales: builder.mutation({
-      query: id => ({
-        url: `/furniture/products/${id}/sales`,
-        method: 'PATCH',
-      }),
-    }),
-    decrementProductSales: builder.mutation({
-      query: id => ({
-        url: `/furniture/products/${id}/decrement-sales`,
-        method: 'PATCH',
-      }),
-    }),
-    resetProductSales: builder.mutation({
-      query: ({userId, productId}: {userId: string; productId: string}) => ({
-        url: `/furniture/products/${userId}/${productId}/reset-sales`,
-        method: 'PATCH',
-      }),
-    }),
+
+
   }),
 });
 
@@ -142,9 +126,6 @@ export const {
   useGetTrendingProductsQuery,
   useGetBestSellerProductsQuery,
   useIncrementProductViewsMutation,
-  useIncrementProductSalesMutation,
-  useDecrementProductSalesMutation,
-  useResetProductSalesMutation,
 
 } = productApi;
 export default productApi;

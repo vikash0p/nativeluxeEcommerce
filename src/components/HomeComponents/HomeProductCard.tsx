@@ -5,12 +5,19 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigation/navigationTypes';
 import {useIncrementProductViewsMutation} from '../../redux-toolkit/features/products/productApi';
+import {ProductSales} from '../../utils/types/salesTypes';
 
-const HomeProductCard = ({product, title}: {product: Product, title: string |number}) => {
+const HomeProductCard = ({
+  product,
+  title,
+}: {
+  product: Product | ProductSales;
+  title: string | number;
+}) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [incrementProductViews] = useIncrementProductViewsMutation();
-//   console.log(product._id);
+  //   console.log(product._id);
 
   return (
     <TouchableOpacity
@@ -19,7 +26,7 @@ const HomeProductCard = ({product, title}: {product: Product, title: string |num
         navigation.navigate('SingleProduct', {itemId: product._id});
         incrementProductViews(product._id);
       }}>
-      <View key={product.id} className="w-52 mr-4">
+      <View key={product._id} className="w-52 mr-4">
         <View className="bg-gray-100 rounded-lg relative">
           {/* New Product Badge */}
           <View className="absolute top-2 left-2 bg-red-500 px-2 py-1 rounded-full z-10">

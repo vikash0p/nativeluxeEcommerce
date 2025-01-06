@@ -10,6 +10,7 @@ import {
 } from '../../redux-toolkit/features/cart/cartApi';
 import {useRemoveItemFromWishlistMutation} from '../../redux-toolkit/features/wishlist/wishlistApi';
 import {WishlistItem} from '../../utils/types/wishlistType';
+import { useIncrementSalesMutation } from "../../redux-toolkit/features/sales/salesApi";
 
 const Cart = ({item}: {item: WishlistItem}) => {
   const {user} = useAppSelector((state: RootState) => state.auth);
@@ -21,7 +22,7 @@ const Cart = ({item}: {item: WishlistItem}) => {
 
   const [isLoading, setIsLoading] = useState(false); // Loading state
 
-
+const [incrementSales] = useIncrementSalesMutation();
 
   const handleAddToCart = async () => {
     if (!user?._id) {
@@ -41,6 +42,7 @@ const Cart = ({item}: {item: WishlistItem}) => {
 
       // Remove item from wishlist
       await removeItemFromWishlist({wishlistItemId: item.id}).unwrap();
+      await incrementSales({productId: item.productId, userId: user._id ?? ''});
 
       console.log('Item added successfully:', response);
       dispatch(resetCartQuantity());

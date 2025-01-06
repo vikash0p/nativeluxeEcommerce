@@ -1,11 +1,9 @@
-import React  from 'react';
+import React from 'react';
 import {View, Text, Image} from 'react-native';
 import {WishlistItem} from '../../utils/types/wishlistType';
 import WishlistMoveToCart from './WishlistMoveToCart';
 const WishlistCard = ({item}: {item: WishlistItem}) => {
   // console.log('🚀 ~ file: WishlistCard.tsx:9 ~ item:', item.color);
-
-
 
   return (
     <View className="flex-row items-center bg-white rounded-xl shadow-md p-4 mb-4">
@@ -37,9 +35,6 @@ const WishlistCard = ({item}: {item: WishlistItem}) => {
 
       {/* Action Buttons */}
       <View className="flex-col gap-3">
-        {/* Remove from Wishlist */}
-        {/* <RemoveWishlist wishlistId={item.id} /> */}
-        {/* Add to Cart */}
         <WishlistMoveToCart item={item} />
       </View>
     </View>

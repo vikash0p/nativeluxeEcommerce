@@ -5,9 +5,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useUpdateCartItemMutation} from '../../redux-toolkit/features/cart/cartApi';
 import {Toast} from 'toastify-react-native';
 import {
-  useDecrementProductSalesMutation,
-  useIncrementProductSalesMutation,
-} from '../../redux-toolkit/features/products/productApi';
+  useDecrementSalesMutation,
+  useIncrementSalesMutation,
+} from '../../redux-toolkit/features/sales/salesApi';
+import {useAppSelector} from '../../redux-toolkit/hooks';
+import {RootState} from '../../redux-toolkit/store';
 
 interface CartUpdateModalProps {
   isVisible: boolean;
@@ -24,10 +26,12 @@ const CartUpdateModal: React.FC<CartUpdateModalProps> = ({
   const [quantity, setQuantity] = useState(item.quantity);
   const [color, setColor] = useState(item.color);
 
+  const {user} = useAppSelector((state: RootState) => state.auth);
+
   const [updateCartItem, {isLoading}] = useUpdateCartItemMutation();
 
-  const [incrementProductSales] = useIncrementProductSalesMutation();
-  const [decrementProductSales] = useDecrementProductSalesMutation();
+  const [incrementSales] = useIncrementSalesMutation();
+  const [decrementSales] = useDecrementSalesMutation();
 
   const handleSave = async () => {
     const updatedItem = {quantity, color};
@@ -42,12 +46,12 @@ const CartUpdateModal: React.FC<CartUpdateModalProps> = ({
 
   const IncrementQuantity = async () => {
     setQuantity(quantity + 1);
-    await incrementProductSales(item.productId).unwrap();
+    await incrementSales({productId: item.productId, userId: user?._id ?? ''});
   };
 
   const DecrementQuantity = async () => {
     setQuantity(quantity - 1);
-    await decrementProductSales(item.productId).unwrap();
+    await decrementSales({productId: item.productId, userId: user?._id ?? ''});
   };
 
   return (
