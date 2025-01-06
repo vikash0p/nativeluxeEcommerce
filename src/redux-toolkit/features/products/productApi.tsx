@@ -115,6 +115,18 @@ const productApi = createApi({
         method: 'PATCH',
       }),
     }),
+    decrementProductSales: builder.mutation({
+      query: id => ({
+        url: `/furniture/products/${id}/decrement-sales`,
+        method: 'PATCH',
+      }),
+    }),
+    resetProductSales: builder.mutation({
+      query: ({userId, productId}: {userId: string; productId: string}) => ({
+        url: `/furniture/products/${userId}/${productId}/reset-sales`,
+        method: 'PATCH',
+      }),
+    }),
   }),
 });
 
@@ -131,5 +143,8 @@ export const {
   useGetBestSellerProductsQuery,
   useIncrementProductViewsMutation,
   useIncrementProductSalesMutation,
+  useDecrementProductSalesMutation,
+  useResetProductSalesMutation,
+
 } = productApi;
 export default productApi;

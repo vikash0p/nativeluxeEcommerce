@@ -4,6 +4,10 @@ import {CartItem} from '../../utils/types/cartType';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useUpdateCartItemMutation} from '../../redux-toolkit/features/cart/cartApi';
 import {Toast} from 'toastify-react-native';
+import {
+  useDecrementProductSalesMutation,
+  useIncrementProductSalesMutation,
+} from '../../redux-toolkit/features/products/productApi';
 
 interface CartUpdateModalProps {
   isVisible: boolean;
@@ -11,12 +15,19 @@ interface CartUpdateModalProps {
   item: CartItem;
 }
 
-const CartUpdateModal: React.FC<CartUpdateModalProps> = ({isVisible,onClose,item}) => {
+const CartUpdateModal: React.FC<CartUpdateModalProps> = ({
+  isVisible,
+  onClose,
+  item,
+}) => {
   // console.log('🚀 ~ file: CartUpdateModal.tsx:15 ~ item:', item.id);
   const [quantity, setQuantity] = useState(item.quantity);
   const [color, setColor] = useState(item.color);
 
   const [updateCartItem, {isLoading}] = useUpdateCartItemMutation();
+
+  const [incrementProductSales] = useIncrementProductSalesMutation();
+  const [decrementProductSales] = useDecrementProductSalesMutation();
 
   const handleSave = async () => {
     const updatedItem = {quantity, color};
@@ -27,6 +38,16 @@ const CartUpdateModal: React.FC<CartUpdateModalProps> = ({isVisible,onClose,item
       Toast.error('Failed to update item');
     }
     onClose();
+  };
+
+  const IncrementQuantity = async () => {
+    setQuantity(quantity + 1);
+    await incrementProductSales(item.productId).unwrap();
+  };
+
+  const DecrementQuantity = async () => {
+    setQuantity(quantity - 1);
+    await decrementProductSales(item.productId).unwrap();
   };
 
   return (
@@ -46,7 +67,7 @@ const CartUpdateModal: React.FC<CartUpdateModalProps> = ({isVisible,onClose,item
             <Text className="text-lg mb-2">Update Quantity</Text>
             <View className="flex-row items-center gap-3 mb-6">
               <TouchableOpacity
-                onPress={() => setQuantity(quantity - 1)}
+                onPress={DecrementQuantity}
                 disabled={quantity <= 1}>
                 <AntDesign
                   name="minussquare"
@@ -58,7 +79,7 @@ const CartUpdateModal: React.FC<CartUpdateModalProps> = ({isVisible,onClose,item
                 {quantity}
               </Text>
               <TouchableOpacity
-                onPress={() => setQuantity(quantity + 1)}
+                onPress={IncrementQuantity}
                 disabled={quantity >= 5}>
                 <AntDesign
                   name="plussquare"
@@ -107,7 +128,9 @@ const CartUpdateModal: React.FC<CartUpdateModalProps> = ({isVisible,onClose,item
             <TouchableOpacity
               onPress={handleSave}
               className="px-4 py-2 rounded-sm bg-[#4f46e5]">
-              <Text className="text-md text-white">{isLoading ? 'Updating...' : 'Update'} </Text>
+              <Text className="text-md text-white">
+                {isLoading ? 'Updating...' : 'Update'}{' '}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

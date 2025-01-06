@@ -5,6 +5,9 @@ import {CartItem} from '../../utils/types/cartType';
 import {useDeleteCartItemMutation} from '../../redux-toolkit/features/cart/cartApi';
 import {Toast} from 'toastify-react-native';
 import CartUpdateModal from './CartUpdateModal';
+import {useResetProductSalesMutation} from '../../redux-toolkit/features/products/productApi';
+import {useAppSelector} from '../../redux-toolkit/hooks';
+import {RootState} from '../../redux-toolkit/store';
 
 interface CartCardProps {
   item: CartItem;
@@ -14,9 +17,21 @@ const CartCard: React.FC<CartCardProps> = ({item}) => {
   const [deleteCartItem, {isLoading}] = useDeleteCartItemMutation();
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const deleteCartHandler = async (id: string) => {
+  const {user} = useAppSelector((state: RootState) => state.auth);
+  const [resetProductSales] = useResetProductSalesMutation();
+
+  const deleteCartHandler = async () => {
     try {
-      await deleteCartItem(id).unwrap();
+      await deleteCartItem(item.id).unwrap();
+
+      if (user?._id) {
+        await resetProductSales({
+          userId: user._id,
+          productId: item.productId,
+        }).unwrap();
+      } else {
+        throw new Error('User ID is undefined');
+      }
       Toast.success('Item removed from cart successfully.');
     } catch (error: any) {
       console.error('Error deleting item from cart:', error);
@@ -69,7 +84,7 @@ const CartCard: React.FC<CartCardProps> = ({item}) => {
         {/* Delete Button */}
         <TouchableOpacity
           className="p-2 rounded-full bg-red-100"
-          onPress={() => deleteCartHandler(item.id)}>
+          onPress={ deleteCartHandler}>
           <AntDesign
             name="delete"
             size={20}
