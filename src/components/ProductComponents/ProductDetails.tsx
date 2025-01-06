@@ -14,6 +14,7 @@ import AdditionalInformation from './AdditionalInformation';
 import {Product} from '../../redux-toolkit/types';
 import {RootState} from '../../redux-toolkit/store';
 import {useGetCartQuery} from '../../redux-toolkit/features/cart/cartApi';
+import {useIncrementProductSalesMutation} from '../../redux-toolkit/features/products/productApi';
 
 interface ProductDetailsProps {
   product: Product;
@@ -31,12 +32,23 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
   const cartQuantity = cartItem?.quantity || 0;
   // console.log('🚀 ~ file: ProductDetails.tsx:33 ~ cartQuantity:', cartQuantity);
 
+  const [incrementProductSales] = useIncrementProductSalesMutation();
+
   // Automatically set the first color
   useEffect(() => {
     if (product.color && product.color.length > 0) {
       dispatch(addColor(product.color[0]));
     }
   }, [product.color, dispatch]);
+
+  const removeFromCartHandler = () => {
+    dispatch(removeFromCart(1));
+  };
+
+  const addFromCartHandler = async () => {
+    dispatch(addToCart(1));
+    await incrementProductSales(product._id).unwrap();
+  };
 
   return (
     <View className="flex-1 bg-white">
@@ -96,7 +108,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
                   cartQuantity >= 5 ? 'hidden' : ''
                 }`}>
                 <TouchableOpacity
-                  onPress={() => dispatch(removeFromCart(1))}
+                  onPress={removeFromCartHandler}
                   disabled={quantity <= 1}>
                   <AntDesign
                     name="minussquare"
@@ -109,7 +121,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
                 </Text>
                 <TouchableOpacity
                   disabled={quantity >= 5}
-                  onPress={() => dispatch(addToCart(1))}>
+                  onPress={addFromCartHandler}>
                   <AntDesign
                     name="plussquare"
                     size={40}

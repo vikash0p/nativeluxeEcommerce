@@ -20,7 +20,6 @@ const TabNavigation = () => {
   const {data,refetch} = useGetWishlistQuery(user?._id ?? '',{
     skip: !user?._id,
   });
-  console.log('🚀 ~ file: TabNavigation.tsx:42 ~ data:', data?.items?.length);
 
 React.useEffect(() => {
   if (user?._id) {
