@@ -13,13 +13,10 @@ import {useAppSelector} from '../redux-toolkit/hooks';
 import {RootState} from '../redux-toolkit/store';
 import {CartData} from '../utils/types/cartType';
 
-
 const CartScreen = () => {
   const {user} = useAppSelector((state: RootState) => state.auth);
   const userId = user?._id ?? '';
   const {data, isLoading} = useGetCartQuery(userId);
-
-
 
   if (isLoading) {
     return (
@@ -38,7 +35,7 @@ const CartScreen = () => {
       <View className="flex-1 mb-20">
         {cartData?.items?.length ? (
           <FlatList
-            data={cartData.items}
+            data={cartData.items.slice().reverse()}
             keyExtractor={item => item.id}
             renderItem={({item}) => <CartCard item={item} />}
           />
