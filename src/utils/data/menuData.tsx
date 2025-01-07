@@ -13,7 +13,7 @@ export const menuItems: MenuItem[] = [
   {
     title: 'My Orders',
     subtitle: 'Already have a 10 orders',
-    screen: {name: 'myOrder'}, // Use object structure for screen
+    screen: {name: 'MyOrder'}, // Use object structure for screen
   },
   {
     title: 'Shipping Address',

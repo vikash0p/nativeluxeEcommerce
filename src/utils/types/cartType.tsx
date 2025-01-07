@@ -8,6 +8,8 @@ export interface CartItem {
   availableColors : string[];
   image: string;
   productId: string;
+  originalPrice: number;
+  discount: number;
 }
 
 export interface CartData {
@@ -17,4 +19,6 @@ export interface CartData {
   totalProducts: number;
   totalQuantity: number;
   userId: string;
+  totalOriginalPrice: number;
+  discountPrice: number;
 }

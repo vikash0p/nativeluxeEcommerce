@@ -1,7 +1,7 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 
-const myOrderScreen = () => {
+const MyOrderScreen = () => {
   return (
     <View>
       <Text>myOrderScreen</Text>
@@ -9,4 +9,4 @@ const myOrderScreen = () => {
   );
 };
 
-export default myOrderScreen;
+export default MyOrderScreen;
