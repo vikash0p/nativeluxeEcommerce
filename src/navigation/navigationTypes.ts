@@ -8,7 +8,12 @@ export type RootStackParamList = {
   Tabs: undefined;
   Search: undefined;
   ViewMore: undefined;
-  SingleProduct:{itemId:string };
+  SingleProduct: {itemId: string};
+  myOrder: undefined;
+  shippingAddress: undefined;
+  paymentMethod: undefined;
+  myReview: undefined;
+  setting: undefined;
 };
 
 export type RegisterScreenNavigationProp = NativeStackNavigationProp< RootStackParamList, 'Register'>;

@@ -14,6 +14,11 @@ import ViewMore from '../screens/ViewMore';
 import SingleProduct from '../screens/SingleProduct';
 import {useAppSelector} from '../redux-toolkit/hooks';
 import {RootState} from '../redux-toolkit/store';
+import myOrderScreen from '../screens/myOrderScreen';
+import ShippingAddressScreen from '../screens/ShippingAddressScreen';
+import PaymentMethodScreen from '../screens/PaymentMethodScreen';
+import MyReviewScreen from '../screens/MyReviewScreen';
+import SettingScreen from '../screens/SettingScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -21,9 +26,7 @@ const StackNavigation = () => {
   const {filterType, filterValue} = useAppSelector(
     (state: RootState) => state.productQuery,
   );
-  const {isAuthenticated} = useAppSelector(
-    (state: RootState) => state.auth,
-  );
+  const {isAuthenticated} = useAppSelector((state: RootState) => state.auth);
   console.log(
     '🚀 ~ file: StackNavigation.tsx:23 ~ isAuthenticated:',
     isAuthenticated,
@@ -85,6 +88,38 @@ const StackNavigation = () => {
             header: () => <CustomHeader data={cartData} />,
           }}
         />
+        <Stack.Screen name="myOrder" component={myOrderScreen}
+         options={{
+          headerShown: true,
+          header: () => <CustomHeader data={{title: 'My Orders'}} />,
+        }}
+         />
+        <Stack.Screen
+          name="shippingAddress"
+          component={ShippingAddressScreen}
+          options={{
+            headerShown: true,
+            header: () => <CustomHeader data={{title: 'Shipping Address'}} />,
+          }}
+        />
+        <Stack.Screen name="paymentMethod" component={PaymentMethodScreen}
+         options={{
+          headerShown: true,
+          header: () => <CustomHeader data={{title: 'Payment Method'}} />,
+        }}
+         />
+        <Stack.Screen name="myReview" component={MyReviewScreen}
+         options={{
+          headerShown: true,
+          header: () => <CustomHeader data={{title: 'My Reviews'}} />,
+        }}
+         />
+        <Stack.Screen name="setting" component={SettingScreen}
+         options={{
+          headerShown: true,
+          header: () => <CustomHeader data={{title: 'Setting'}} />,
+        }}
+         />
       </Stack.Navigator>
     </NavigationContainer>
   );

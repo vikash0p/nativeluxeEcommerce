@@ -74,7 +74,9 @@ const UserScreen = () => {
         {menuItems.map((item, index) => (
           <TouchableOpacity
             key={index}
-            onPress={() => navigation.navigate('Cart')}
+            onPress={() =>
+              navigation.navigate(item.screen.name, item.screen.params)
+            }
             className="flex-row items-center justify-between w-[90%] mx-auto p-4 py-6 my-2 rounded-lg shadow-md bg-white">
             <View>
               <Text className="text-2xl font-bold">{item.title}</Text>
