@@ -1,15 +1,24 @@
 import React, {useEffect} from 'react';
-import {View, Text, ScrollView, ActivityIndicator} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  View,
+  Text,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
 import LogoutButton from '../components/ReusableComponents/LogoutButton';
 import {useAppSelector} from '../redux-toolkit/hooks';
 import {RootState} from '../redux-toolkit/store';
 import {RootStackParamList} from '../navigation/navigationTypes';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
+import Entypo from 'react-native-vector-icons/Entypo';
+import {menuItems} from '../utils/data/menuData';
 
 const UserScreen = () => {
-  const {user, isAuthenticated, loading} = useAppSelector((state: RootState) => state.auth);
+  const {user, isAuthenticated, loading} = useAppSelector(
+    (state: RootState) => state.auth,
+  );
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -30,55 +39,52 @@ const UserScreen = () => {
   }
 
   return (
-    <ScrollView className="flex-1 px-6 py-4 bg-gray-100 space-y-2">
-      {/* Profile Header */}
-      <View className="items-center p-6 mb-4 bg-white shadow-md rounded-2xl">
-        <View className="w-24 h-24 bg-[#4f46e5] rounded-full flex items-center justify-center">
-          <Icon name="person" size={32} color="white" />
+    <ScrollView className="flex-1  bg-gray-100 space-y-2">
+      {/* header */}
+      <View className="flex-row items-center justify-between bg-[#4f46e5] py-4 px-4 rounded-b-3xl ">
+        <View>
+          <Text className="text-2xl font-bold text-white ">Profile</Text>
+        </View>
+        <View>
+          <LogoutButton />
+        </View>
+      </View>
+      {/* user details */}
+      <View className="flex-row gap-10 items-center p-6 mb-4">
+        {/* Avatar Circle */}
+        <View className="w-20 h-20 bg-[#4f46e5] rounded-full flex items-center justify-center">
+          <Text className="text-4xl font-bold text-white text-center">
+            {user?.name.charAt(0).toUpperCase()}
+          </Text>
         </View>
 
-        <Text className="text-2xl font-bold text-gray-800  ">
-          {user?.name || 'Guest User'}
-        </Text>
-        <Text className="text-sm text-gray-600">{user?.email}</Text>
-        <View className="flex-row items-center ">
-          <Icon name="call" size={12} color="#4f46e5" />
-          <Text className=" text-sm text-gray-600">{user?.phone}</Text>
+        {/* User Details */}
+        <View>
+          <Text className="text-2xl font-bold text-gray-800 uppercase ">
+            {user?.name}
+          </Text>
+          <Text className="text-lg text-black font-semibold ">
+            {user?.email}
+          </Text>
         </View>
       </View>
 
-      {/* User Details */}
-      <View className="p-4 mb-6 bg-white shadow-md rounded-2xl">
-        <Text className="mb-4 text-lg font-bold text-gray-800">
-          User Information
-        </Text>
-        <View className="pb-2 mb-2 border-b border-gray-200">
-          <Text className="text-gray-600">ID:</Text>
-          <Text className="font-medium text-gray-800">{user?._id || '-'}</Text>
-        </View>
-        <View className="pb-2 mb-2 border-b border-gray-200">
-          <Text className="text-gray-600">Name:</Text>
-          <Text className="font-medium text-gray-800">
-            {user?.name || 'N/A'}
-          </Text>
-        </View>
-        <View className="pb-2 mb-2 border-b border-gray-200">
-          <Text className="text-gray-600">Email:</Text>
-          <Text className="font-medium text-gray-800">
-            {user?.email || 'N/A'}
-          </Text>
-        </View>
-        {user?.phone && (
-          <View>
-            <Text className="text-gray-600">Phone:</Text>
-            <Text className="font-medium text-gray-800">{user.phone}</Text>
-          </View>
-        )}
-      </View>
-
-      {/* Logout Button */}
-      <View className="items-center mt-4">
-        <LogoutButton />
+      {/*  */}
+      <View className="flex-1 bg-gray-100">
+        {menuItems.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => navigation.navigate('Cart')}
+            className="flex-row items-center justify-between w-[90%] mx-auto p-4 py-6 my-2 rounded-lg shadow-md bg-white">
+            <View>
+              <Text className="text-2xl font-bold">{item.title}</Text>
+              <Text className="text-lg text-gray-500">{item.subtitle}</Text>
+            </View>
+            <View>
+              <Entypo name="chevron-thin-right" size={30} color="black" />
+            </View>
+          </TouchableOpacity>
+        ))}
       </View>
     </ScrollView>
   );

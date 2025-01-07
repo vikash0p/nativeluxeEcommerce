@@ -123,7 +123,7 @@ const Footer = () => {
       {/* Footer Disclaimer */}
       <View className="border-t border-gray-300 pt-4">
         <Text className="text-gray-500 text-sm text-center">
-          © 2024, Royaloak | All rights reserved. |{' '}
+          © {new Date().getFullYear()}, Luxe | All rights reserved. |{' '}
           <Text className="text-indigo-600 hover:text-indigo-800">
             Privacy Policy
           </Text>{' '}

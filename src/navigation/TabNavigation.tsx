@@ -17,16 +17,15 @@ const TabNavigation = () => {
 
   const {user} = useAppSelector((state: RootState) => state.auth);
 
-  const {data,refetch} = useGetWishlistQuery(user?._id ?? '',{
+  const {data, refetch} = useGetWishlistQuery(user?._id ?? '', {
     skip: !user?._id,
   });
 
-React.useEffect(() => {
-  if (user?._id) {
-    refetch(); // Ensure cart data is fetched when user ID changes
-  }
-}, [user?._id, refetch]);
-
+  React.useEffect(() => {
+    if (user?._id) {
+      refetch(); // Ensure cart data is fetched when user ID changes
+    }
+  }, [user?._id, refetch]);
 
   return (
     <Tabs.Navigator
