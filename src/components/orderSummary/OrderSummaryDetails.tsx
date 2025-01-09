@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import {View, Text, ActivityIndicator} from 'react-native';
 import {useAppSelector} from '../../redux-toolkit/hooks';
@@ -10,10 +11,11 @@ import PriceSummary from '../cartComponents/PriceSummary';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigation/navigationTypes';
 import {useNavigation} from '@react-navigation/native';
+import PaymentButton from '../PaymentComponents/PaymentButton';
 
 const OrderSummaryDetails = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const {user} = useAppSelector((state: RootState) => state.auth);
   const userId = user?._id ?? '';
@@ -40,11 +42,13 @@ const OrderSummaryDetails = () => {
           <CartItems items={cartData.items} cartData={cartData} />
         )}
       </View>
-      <PriceSummary
+      {/* <PriceSummary
         cartData={cartData}
         name={() => navigation.navigate('Payment')}
         title={'Payment'}
-      />
+      /> */}
+
+      <PaymentButton cartData={cartData} />
     </View>
   );
 };
