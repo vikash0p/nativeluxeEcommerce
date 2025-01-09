@@ -19,6 +19,8 @@ import PaymentMethodScreen from '../screens/PaymentMethodScreen';
 import MyReviewScreen from '../screens/MyReviewScreen';
 import SettingScreen from '../screens/SettingScreen';
 import MyOrderScreen from '../screens/MyOrderScreen';
+import OrderSummaryScreen from "../screens/OrderSummaryScreen";
+import PaymentScreen from "../screens/PaymentScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -126,6 +128,22 @@ const StackNavigation = () => {
           options={{
             headerShown: true,
             header: () => <CustomHeader data={{title: 'Setting'}} />,
+          }}
+        />
+        <Stack.Screen
+          name="OrderSummary"
+          component={OrderSummaryScreen}
+          options={{
+            headerShown: true,
+            header: () => <CustomHeader data={{title: 'Order Summary'}} />,
+          }}
+        />
+        <Stack.Screen
+          name="Payment"
+          component={PaymentScreen}
+          options={{
+            headerShown: true,
+            header: () => <CustomHeader data={{title: 'Payment'}} />,
           }}
         />
       </Stack.Navigator>

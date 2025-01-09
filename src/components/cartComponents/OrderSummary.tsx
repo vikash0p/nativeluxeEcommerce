@@ -4,7 +4,7 @@ import {CartData} from '../../utils/types/cartType';
 
 const OrderSummary = ({cartData}: {cartData: CartData}) => {
   return (
-    <View className="bg-white p-4 ">
+    <View className="bg-white p-4 border w-[90%] m-auto ">
       <Text className="text-xl font-semibold text-black mb-2">
         Order Summary
       </Text>
