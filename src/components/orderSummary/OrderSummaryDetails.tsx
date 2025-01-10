@@ -42,13 +42,13 @@ const OrderSummaryDetails = () => {
           <CartItems items={cartData.items} cartData={cartData} />
         )}
       </View>
-      {/* <PriceSummary
+      <PriceSummary
         cartData={cartData}
         name={() => navigation.navigate('Payment')}
         title={'Payment'}
-      /> */}
+      />
 
-      <PaymentButton cartData={cartData} />
+      {/* <PaymentButton cartData={cartData} /> */}
     </View>
   );
 };

@@ -1,17 +1,19 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {OrderResponse,GetOrderByIdResponse,getUserOrdersResponse} from '../../../utils/types/OrderTypes';
-
-
-
+import {
+  OrderResponse,
+  GetOrderByIdResponse,
+  getUserOrdersResponse,
+} from '../../../utils/types/OrderTypes';
+import cartApi from '../cart/cartApi';
 
 // Define API slice
- const orderApi = createApi({
+const orderApi = createApi({
   reducerPath: 'orderApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://backend-house.vercel.app/order',
     credentials: 'include',
   }),
-  tagTypes: ['Orders', 'Order'],
+  tagTypes: ['Orders', 'Order', 'Cart'],
   endpoints: builder => ({
     // Place an order
     placeOrder: builder.mutation<
@@ -23,7 +25,18 @@ import {OrderResponse,GetOrderByIdResponse,getUserOrdersResponse} from '../../..
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Orders'],
+      async onQueryStarted(body, {dispatch, queryFulfilled}) {
+        try {
+          // Await the order placement request
+          await queryFulfilled;
+
+          // Invalidate the Cart tag to trigger a refetch
+          dispatch(cartApi.util.invalidateTags(['Cart']));
+        } catch (error) {
+          console.error('Error placing order:', error);
+        }
+      },
+      invalidatesTags: ['Orders'], // Only invalidates Orders
     }),
 
     // Get all orders for a user
@@ -48,4 +61,3 @@ export const {
 } = orderApi;
 
 export default orderApi;
-

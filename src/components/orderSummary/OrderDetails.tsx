@@ -33,9 +33,6 @@ const OrderDetails = () => {
   return (
     <View className="bg-gray-50 flex-1 mb-10">
       <View className="p-1">
-        <Text className="text-2xl font-bold text-gray-800 mb-6">
-          Order Details
-        </Text>
 
         <FlatList
           data={data.orders}

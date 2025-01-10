@@ -27,7 +27,7 @@ const ShippingAddressScreen = () => {
   );
 
   const {data: cartData} = useGetCartQuery(user?._id ?? '');
-  console.log('🚀 ~ file: ShippingAddressScreen.tsx:30 ~ cartData:', cartData);
+  // console.log('🚀 ~ file: ShippingAddressScreen.tsx:30 ~ cartData:', cartData);
 
   const renderContent = () => {
     if (isLoading) {

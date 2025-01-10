@@ -19,8 +19,9 @@ import PaymentMethodScreen from '../screens/PaymentMethodScreen';
 import MyReviewScreen from '../screens/MyReviewScreen';
 import SettingScreen from '../screens/SettingScreen';
 import MyOrderScreen from '../screens/MyOrderScreen';
-import OrderSummaryScreen from "../screens/OrderSummaryScreen";
-import PaymentScreen from "../screens/PaymentScreen";
+import OrderSummaryScreen from '../screens/OrderSummaryScreen';
+import PaymentScreen from '../screens/PaymentScreen';
+import SuccessScreen from '../screens/SuccessScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -44,7 +45,7 @@ const StackNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={isAuthenticated ? 'Tabs' : 'Welcome'}
+        initialRouteName={  'Success' }
         screenOptions={{headerShown: false}}>
         {/* Conditionally render authentication-related screens */}
         {!isAuthenticated && (
@@ -146,6 +147,7 @@ const StackNavigation = () => {
             header: () => <CustomHeader data={{title: 'Payment'}} />,
           }}
         />
+        <Stack.Screen name="Success" component={SuccessScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -16,6 +16,7 @@ export type RootStackParamList = {
   setting: undefined;
   OrderSummary :undefined;
   Payment: undefined;
+  Success: undefined;
 };
 
 export type RegisterScreenNavigationProp = NativeStackNavigationProp<

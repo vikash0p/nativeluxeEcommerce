@@ -9,6 +9,7 @@ type AccordionProps = {
   expanded: boolean;
   onToggle: () => void;
   children: React.ReactNode;
+  disabled?: boolean;
 };
 
 const Accordion: React.FC<AccordionProps> = ({
@@ -17,22 +18,27 @@ const Accordion: React.FC<AccordionProps> = ({
   expanded,
   onToggle,
   children,
+  disabled,
 }) => {
   return (
     <>
       <TouchableOpacity
+      disabled={disabled}
         className="flex-row items-center justify-between p-4 bg-white rounded-lg shadow mb-2"
-        onPress={onToggle}>
+        onPress={() => !disabled && onToggle()}>
         <View className="flex-row items-center">
           {icon}
-          <Text className="text-lg font-semibold text-gray-700 ml-3">
+          <Text
+            className={`text-lg font-semibold  ml-3 ${
+              disabled ? 'text-gray-400' : 'text-gray-800'
+            }`}>
             {title}
           </Text>
         </View>
         <MaterialIcons
           name={expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
           size={24}
-          color="#4f46e5"
+          color={disabled ? '#ccc' : '#4f46e5'}
         />
       </TouchableOpacity>
       {expanded && (
