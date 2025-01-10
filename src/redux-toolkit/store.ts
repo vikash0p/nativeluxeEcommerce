@@ -12,6 +12,7 @@ import wishlistApi from './features/wishlist/wishlistApi';
 import salesApi from './features/sales/salesApi';
 import addressApi from './features/address/addressApi';
 import addressReducer from './features/address/addressSlice';
+import orderApi from './features/order/orderApi';
 
 export const store = configureStore({
   reducer: {
@@ -27,6 +28,7 @@ export const store = configureStore({
     [wishlistApi.reducerPath]: wishlistApi.reducer,
     [salesApi.reducerPath]: salesApi.reducer,
     [addressApi.reducerPath]: addressApi.reducer,
+    [orderApi.reducerPath]: orderApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
@@ -37,6 +39,7 @@ export const store = configureStore({
       wishlistApi.middleware,
       salesApi.middleware,
       addressApi.middleware,
+      orderApi.middleware,
     ),
 });
 

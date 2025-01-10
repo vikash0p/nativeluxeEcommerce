@@ -14,16 +14,20 @@ import AddAddress from '../components/addressComponents/AddAddress';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-import {RootStackParamList} from '../navigation/navigationTypes'
-import { useNavigation } from "@react-navigation/native";
-
+import {RootStackParamList} from '../navigation/navigationTypes';
+import {useNavigation} from '@react-navigation/native';
+import {useGetCartQuery} from '../redux-toolkit/features/cart/cartApi';
 
 const ShippingAddressScreen = () => {
-  const navigation=useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {user} = useAppSelector((state: RootState) => state.auth);
   const {data, isLoading, isError, error} = useGetAddressesByUserQuery(
     user?._id ?? '',
   );
+
+  const {data: cartData} = useGetCartQuery(user?._id ?? '');
+  console.log('🚀 ~ file: ShippingAddressScreen.tsx:30 ~ cartData:', cartData);
 
   const renderContent = () => {
     if (isLoading) {
@@ -51,11 +55,13 @@ const ShippingAddressScreen = () => {
     }
 
     if (data?.length) {
+      const reversedData = data.slice().reverse(); // Reverse the array once
+
       return (
         <FlatList
-          data={data}
+          data={reversedData} // Use the reversed array here
           keyExtractor={item => item._id!}
-          renderItem={item => <AddressDetails item={item.item} />}
+          renderItem={({item}) => <AddressDetails item={item} />} // Render individual items
           contentContainerStyle={{paddingBottom: 20}}
           showsVerticalScrollIndicator={false}
         />
@@ -83,10 +89,21 @@ const ShippingAddressScreen = () => {
       <View className="w-full mt-4">
         <TouchableOpacity
           onPress={() => {
+            // Ensure the button is disabled when there are no items in the cart
+            if (cartData?.items.length === 0) {
+              return; // Do nothing if the cart is empty
+            }
+
             navigation.navigate('OrderSummary');
           }}
-          className="bg-[#4f46e5] rounded-full py-3 justify-center items-center shadow-md">
-          <Text className="text-white font-semibold text-xl">Continue</Text>
+          className={`bg-[#4f46e5] rounded-full py-3 justify-center items-center shadow-md ${
+            cartData?.items.length === 0 ? 'opacity-50' : 'opacity-100'
+          }`}
+          disabled={cartData?.items.length === 0} // Disable button if no items in the cart
+        >
+          <Text className="text-white font-semibold text-xl">
+            {cartData?.items.length === 0 ? 'No Items' : 'Continue'}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

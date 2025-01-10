@@ -13,12 +13,25 @@ import {RootStackParamList} from '../navigation/navigationTypes';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {menuItems} from '../utils/data/menuData';
+import {useGetUserOrdersQuery} from '../redux-toolkit/features/order/orderApi';
+
+
+
+interface MenuItem {
+  title: string;
+  subtitle: string;
+  screen: {
+    name: keyof RootStackParamList;
+    params?: any;
+  };
+}
 
 const UserScreen = () => {
   const {user, isAuthenticated, loading} = useAppSelector(
     (state: RootState) => state.auth,
   );
+  const userId = user?._id ?? ' ';
+  const {data} = useGetUserOrdersQuery(userId);
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -37,6 +50,34 @@ const UserScreen = () => {
       </View>
     );
   }
+
+  const menuItems: MenuItem[] = [
+    {
+      title: 'My Orders',
+      subtitle: `Already have ${data?.orders.length} orders`,
+      screen: {name: 'MyOrder'},
+    },
+    {
+      title: 'Shipping Address',
+      subtitle: 'Manage your shipping address',
+      screen: {name: 'shippingAddress'},
+    },
+    {
+      title: 'Payment Method',
+      subtitle: 'Manage your payment methods',
+      screen: {name: 'paymentMethod'},
+    },
+    {
+      title: 'My Reviews',
+      subtitle: 'Check your reviews and ratings',
+      screen: {name: 'myReview'},
+    },
+    {
+      title: 'Setting',
+      subtitle: 'Customize your app settings',
+      screen: {name: 'setting'},
+    },
+  ];
 
   return (
     <ScrollView className="flex-1  bg-gray-100 space-y-2">

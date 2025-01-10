@@ -7,7 +7,6 @@ import {CartData} from '../../utils/types/cartType';
 
 const PaymentButton: React.FC<{cartData: CartData}> = ({cartData}) => {
   const {addresses} = useAppSelector((state: RootState) => state.address);
-  console.log('🚀 ~ file: PaymentButton.tsx:9 ~ addresses:', addresses);
 
   const handlePayment = () => {
     const options = {

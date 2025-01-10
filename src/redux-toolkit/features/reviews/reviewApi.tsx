@@ -1,9 +1,9 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {ReviewResponse} from '../../types'
+import {ReviewResponse} from '../../types';
 
 const reviewApi = createApi({
   reducerPath: 'reviewApi',
-  baseQuery: fetchBaseQuery({baseUrl: 'https://backend-house.vercel.app'}), // Adjust the base URL as needed
+  baseQuery: fetchBaseQuery({baseUrl: 'https://backend-house.vercel.app'}),
   tagTypes: ['Review'],
   endpoints: builder => ({
     // Fetch all reviews
@@ -20,6 +20,10 @@ const reviewApi = createApi({
     getReviewsByProductId: builder.query<ReviewResponse, string>({
       query: productId => `/reviews/product/${productId}`,
       providesTags: (result, error, productId) => [{type: 'Review', productId}],
+    }),
+    getReviewsByUserId: builder.query<ReviewResponse, string>({
+      query: userId => `/reviews/user/${userId}`,
+      providesTags: (result, error, userId) => [{type: 'Review', userId}],
     }),
     // Create a review
     createReview: builder.mutation({
@@ -57,6 +61,7 @@ export const {
   useCreateReviewMutation,
   useUpdateReviewMutation,
   useDeleteReviewMutation,
+  useGetReviewsByUserIdQuery,
 } = reviewApi;
 
 export default reviewApi;

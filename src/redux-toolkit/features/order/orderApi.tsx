@@ -1,40 +1,21 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {OrderResponse,GetOrderByIdResponse,getUserOrdersResponse} from '../../../utils/types/OrderTypes';
 
-// Define types for the Order, CartItem, and Address
-export interface CartItem {
-  productId: string;
-  quantity: number;
-  price: number;
-}
 
-export interface Order {
-  _id: string;
-  userId: string;
-  items: CartItem[];
-  totalAmount: number;
-  shippingAddress: string; // Can be Address object if populated
-  paymentMethod: string;
-  createdAt: string;
-}
 
-export interface Address {
-  _id: string;
-  street: string;
-  city: string;
-  state: string;
-  zip: string;
-  country: string;
-}
 
 // Define API slice
-export const orderApi = createApi({
-  reducerPath: 'orderApi', // A unique key for this API slice in the store
-  baseQuery: fetchBaseQuery({baseUrl: '/api/orders'}), // Adjust the base URL as needed
-  tagTypes: ['Orders', 'Order'], // Tags for cache invalidation
+ const orderApi = createApi({
+  reducerPath: 'orderApi',
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://backend-house.vercel.app/order',
+    credentials: 'include',
+  }),
+  tagTypes: ['Orders', 'Order'],
   endpoints: builder => ({
     // Place an order
     placeOrder: builder.mutation<
-      Order,
+      OrderResponse,
       {userId: string; shippingAddressId: string; paymentMethod: string}
     >({
       query: body => ({
@@ -42,19 +23,19 @@ export const orderApi = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Orders'], // Invalidate cache for Orders after placing a new one
+      invalidatesTags: ['Orders'],
     }),
 
     // Get all orders for a user
-    getUserOrders: builder.query<Order[], string>({
+    getUserOrders: builder.query<getUserOrdersResponse, string>({
       query: userId => `/user/${userId}`,
-      providesTags: ['Orders'], // Cache the result with the 'Orders' tag
+      providesTags: ['Orders'],
     }),
 
     // Get a single order by ID
-    getOrderById: builder.query<Order, string>({
+    getOrderById: builder.query<GetOrderByIdResponse, string>({
       query: orderId => `/${orderId}`,
-      providesTags: (result, error, id) => [{type: 'Order', id}], // Cache per order
+      providesTags: (result, error, id) => [{type: 'Order', id}],
     }),
   }),
 });
@@ -65,3 +46,6 @@ export const {
   useGetUserOrdersQuery,
   useGetOrderByIdQuery,
 } = orderApi;
+
+export default orderApi;
+

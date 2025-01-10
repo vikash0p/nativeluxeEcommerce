@@ -8,7 +8,7 @@ import {
 } from '../../redux-toolkit/features/cart/cartApi';
 import {Toast} from 'toastify-react-native';
 import {resetCartQuantity} from '../../redux-toolkit/features/cart/cartSlice';
-import { useIncrementSalesMutation } from "../../redux-toolkit/features/sales/salesApi";
+import {useIncrementSalesMutation} from '../../redux-toolkit/features/sales/salesApi';
 
 const Cart = ({productId}: {productId: string}) => {
   const {user} = useAppSelector((state: RootState) => state.auth);

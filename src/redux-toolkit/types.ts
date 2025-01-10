@@ -76,6 +76,7 @@ export interface UserProps {
 
 
 
+
 export interface ReviewResponse {
   success: boolean;
   averageRating: string;
@@ -105,4 +106,10 @@ export interface Product {
   _id: string;
   title: string;
   category: string;
+  image: string;
+  finalPrice: number;
 }
+
+
+
+
