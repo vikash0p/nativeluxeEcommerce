@@ -45,7 +45,7 @@ const StackNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={  'Success' }
+        initialRouteName={ isAuthenticated ? 'Tabs' : 'Welcome' }
         screenOptions={{headerShown: false}}>
         {/* Conditionally render authentication-related screens */}
         {!isAuthenticated && (

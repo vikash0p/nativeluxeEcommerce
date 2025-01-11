@@ -7,30 +7,43 @@ import {addAddress} from '../../redux-toolkit/features/address/addressSlice';
 import {RootState} from '../../redux-toolkit/store';
 import EditAddressModel from './EditAddressModel';
 import Feather from 'react-native-vector-icons/Feather';
-import { useDeleteAddressMutation } from "../../redux-toolkit/features/address/addressApi";
+import {useDeleteAddressMutation} from '../../redux-toolkit/features/address/addressApi';
+import { Toast } from "toastify-react-native";
 
 const AddressDetails = ({item}: {item: Address}) => {
   const dispatch = useAppDispatch();
   const {addresses} = useAppSelector((state: RootState) => state.address);
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const [deleteAddress ,{isLoading}] = useDeleteAddressMutation();
+  const [deleteAddress, {isLoading}] = useDeleteAddressMutation();
 
   useEffect(() => {
     if (!addresses && item) {
       dispatch(addAddress(item));
     }
-  }, [dispatch, item, addresses]);
+  }, [dispatch, item, addresses, isLoading]);
+
+
 
 
 
   const deleteHandler = async () => {
+  if (addresses?._id !== item._id) {
+    Toast.warn('Please select the address before deleting.');
+    return;
+  }
+
     try {
       await deleteAddress(item._id);
+      dispatch(addAddress({} as Address));
+      Toast.success('Address deleted successfully!');
+
     } catch (error) {
       console.error(error);
+      Toast.error('Failed to delete address.');
     }
   };
+
 
   return (
     <View className="bg-white p-6 rounded-lg shadow-md mb-4 border border-gray-200">
@@ -83,7 +96,9 @@ const AddressDetails = ({item}: {item: Address}) => {
             className="flex-row items-center bg-red-500 px-3 py-2 rounded-md shadow active:bg-red-700"
             onPress={deleteHandler}>
             <Feather name="trash-2" size={16} color="white" />
-            <Text className="text-white font-bold text-sm ml-2">{isLoading ? 'Deleting...' : 'Delete'} </Text>
+            <Text className="text-white font-bold text-sm ml-2">
+              {isLoading ? 'Deleting...' : 'Delete'}{' '}
+            </Text>
           </TouchableOpacity>
         </View>
       )}

@@ -8,30 +8,12 @@ import StarRating from '../components/ProductComponents/StarRating';
 const MyReviewScreen = () => {
   const {user} = useAppSelector((state: RootState) => state.auth);
   const userId = user?._id ?? '';
-  const {
-    data: reviews,
-    isLoading,
-    isError,
-    error,
-  } = useGetReviewsByUserIdQuery(userId);
+  const {data: reviews, isLoading} = useGetReviewsByUserIdQuery(userId);
 
   if (isLoading) {
     return (
       <View className="flex-1 justify-center items-center">
         <ActivityIndicator size="large" color="#000" />
-      </View>
-    );
-  }
-
-  if (isError) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <Text className="text-red-500 text-lg">Failed to load reviews</Text>
-        <Text className="text-gray-500 text-sm">
-          {'status' in error
-            ? `Error: ${error.status}`
-            : error?.message || 'Unknown error'}
-        </Text>
       </View>
     );
   }
@@ -70,9 +52,11 @@ const MyReviewScreen = () => {
           </View>
         )}
         ListEmptyComponent={
-          <Text className="text-center text-gray-500 mt-4">
-            No reviews available
-          </Text>
+          <View className="flex-1 items-center justify-center">
+            <Text className="text-center text-gray-900 text-2xl font-bold">
+              No reviews available
+            </Text>
+          </View>
         }
       />
     </View>

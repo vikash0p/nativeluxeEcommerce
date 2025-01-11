@@ -22,9 +22,20 @@ const ShippingAddressScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {user} = useAppSelector((state: RootState) => state.auth);
-  const {data, isLoading, isError, error} = useGetAddressesByUserQuery(
+  const {addresses} = useAppSelector((state: RootState) => state.address);
+  console.log(
+    '🚀 ~ file: ShippingAddressScreen.tsx:26 ~ addresses:',
+    addresses,
+  );
+  const {data, isLoading, isError, error, refetch} = useGetAddressesByUserQuery(
     user?._id ?? '',
   );
+
+  React.useEffect(() => {
+    if (user?._id) {
+      refetch();
+    }
+  }, [user?._id, refetch]);
 
   const {data: cartData} = useGetCartQuery(user?._id ?? '');
   // console.log('🚀 ~ file: ShippingAddressScreen.tsx:30 ~ cartData:', cartData);
@@ -42,7 +53,7 @@ const ShippingAddressScreen = () => {
     if (isError) {
       return (
         <View className="flex-1 justify-center items-center">
-          <Text className="text-red-500 text-center">
+          <Text className="text-red-500 text-center text-2xl">
             {'data' in error &&
             typeof error.data === 'object' &&
             error.data !== null &&
@@ -77,6 +88,18 @@ const ShippingAddressScreen = () => {
     );
   };
 
+  const isButtonDisabled =
+    !cartData?.items.length ||
+    !addresses ||
+    Object.keys(addresses).length === 0;
+
+  const handlePress = () => {
+    if (isButtonDisabled) {
+      return;
+    }
+    navigation.navigate('OrderSummary');
+  };
+
   return (
     <View className="flex-1 bg-gray-50 p-4">
       {/* Add New Address Section */}
@@ -88,21 +111,13 @@ const ShippingAddressScreen = () => {
       {/* Continue Button */}
       <View className="w-full mt-4">
         <TouchableOpacity
-          onPress={() => {
-            // Ensure the button is disabled when there are no items in the cart
-            if (cartData?.items.length === 0) {
-              return; // Do nothing if the cart is empty
-            }
-
-            navigation.navigate('OrderSummary');
-          }}
+          onPress={handlePress}
           className={`bg-[#4f46e5] rounded-full py-3 justify-center items-center shadow-md ${
-            cartData?.items.length === 0 ? 'opacity-50' : 'opacity-100'
+            isButtonDisabled ? 'opacity-50' : 'opacity-100'
           }`}
-          disabled={cartData?.items.length === 0} // Disable button if no items in the cart
-        >
+          disabled={isButtonDisabled}>
           <Text className="text-white font-semibold text-xl">
-            {cartData?.items.length === 0 ? 'No Items' : 'Continue'}
+            {isButtonDisabled ? 'disabled' : 'Continue'}
           </Text>
         </TouchableOpacity>
       </View>

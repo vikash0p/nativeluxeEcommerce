@@ -42,7 +42,9 @@ const addressSlice = createSlice({
     addAddress: (state, action: PayloadAction<Address>) => {
       state.addresses = action.payload;
     },
-
+    removeAddress: (state) => {
+      state.addresses = null;
+    },
     // Action to set the address fields
     setAddress: (state, action: PayloadAction<AddressFields>) => {
       state.addressFields = action.payload;
@@ -57,7 +59,8 @@ const addressSlice = createSlice({
 });
 
 // Export actions
-export const {addAddress, setAddress, resetAddress} = addressSlice.actions;
+export const {addAddress, setAddress, resetAddress, removeAddress} =
+  addressSlice.actions;
 
 // Export reducer
 export default addressSlice.reducer;
