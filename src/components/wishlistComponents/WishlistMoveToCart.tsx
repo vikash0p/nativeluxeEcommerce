@@ -5,12 +5,10 @@ import {useAppDispatch, useAppSelector} from '../../redux-toolkit/hooks';
 import {RootState} from '../../redux-toolkit/store';
 import {Toast} from 'toastify-react-native';
 import {resetCartQuantity} from '../../redux-toolkit/features/cart/cartSlice';
-import {
-  useAddItemToCartMutation,
-} from '../../redux-toolkit/features/cart/cartApi';
+import {useAddItemToCartMutation} from '../../redux-toolkit/features/cart/cartApi';
 import {useRemoveItemFromWishlistMutation} from '../../redux-toolkit/features/wishlist/wishlistApi';
 import {WishlistItem} from '../../utils/types/wishlistType';
-import { useIncrementSalesMutation } from "../../redux-toolkit/features/sales/salesApi";
+import {useIncrementSalesMutation} from '../../redux-toolkit/features/sales/salesApi';
 
 const Cart = ({item}: {item: WishlistItem}) => {
   const {user} = useAppSelector((state: RootState) => state.auth);
@@ -22,7 +20,7 @@ const Cart = ({item}: {item: WishlistItem}) => {
 
   const [isLoading, setIsLoading] = useState(false); // Loading state
 
-const [incrementSales] = useIncrementSalesMutation();
+  const [incrementSales] = useIncrementSalesMutation();
 
   const handleAddToCart = async () => {
     if (!user?._id) {
@@ -33,7 +31,7 @@ const [incrementSales] = useIncrementSalesMutation();
     setIsLoading(true); // Set loading to true
     try {
       // Add item to cart
-     await addItemToCart({
+      await addItemToCart({
         userId: user._id,
         productId: item.productId,
         quantity,
