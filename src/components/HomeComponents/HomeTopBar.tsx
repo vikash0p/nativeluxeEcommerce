@@ -24,7 +24,7 @@ const HomeTopBar: React.FC<{
       <Search style="w-[88%]" />
 
       {/* Cart Icon with Red Badge */}
-      <View className="relative ">
+      <View className="relative">
         <TouchableOpacity
           onPress={() => navigation.navigate('Cart')}
           className="p-2"
