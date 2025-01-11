@@ -40,7 +40,7 @@ const Cart = ({productId}: {productId: string}) => {
 
       Toast.success('Item added to cart successfully.');
     } catch (error: any) {
-      console.error('Error adding item to cart:', error);
+
       Toast.error(
         (error as {data?: {message?: string}})?.data?.message ||
           'Something went wrong. Please try again.',

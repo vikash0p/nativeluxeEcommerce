@@ -33,7 +33,7 @@ const [incrementSales] = useIncrementSalesMutation();
     setIsLoading(true); // Set loading to true
     try {
       // Add item to cart
-      const response = await addItemToCart({
+     await addItemToCart({
         userId: user._id,
         productId: item.productId,
         quantity,
@@ -44,11 +44,11 @@ const [incrementSales] = useIncrementSalesMutation();
       await removeItemFromWishlist({wishlistItemId: item.id}).unwrap();
       await incrementSales({productId: item.productId, userId: user._id ?? ''});
 
-      console.log('Item added successfully:', response);
+      // console.log('Item added successfully:', response);
       dispatch(resetCartQuantity());
       Toast.success('Item added to cart successfully.');
     } catch (error: any) {
-      console.error('Error adding item to cart:', error);
+      // console.error('Error adding item to cart:', error);
       Toast.error(
         error?.data?.message || 'Something went wrong. Please try again.',
       );

@@ -30,10 +30,10 @@ const StackNavigation = () => {
     (state: RootState) => state.productQuery,
   );
   const {isAuthenticated} = useAppSelector((state: RootState) => state.auth);
-  console.log(
-    '🚀 ~ file: StackNavigation.tsx:23 ~ isAuthenticated:',
-    isAuthenticated,
-  );
+  // console.log(
+  //   '🚀 ~ file: StackNavigation.tsx:23 ~ isAuthenticated:',
+  //   isAuthenticated,
+  // );
 
   const cartData = {
     title: 'Cart',
