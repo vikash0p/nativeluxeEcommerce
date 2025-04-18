@@ -8,7 +8,7 @@ import {RootState} from '../../redux-toolkit/store';
 import EditAddressModel from './EditAddressModel';
 import Feather from 'react-native-vector-icons/Feather';
 import {useDeleteAddressMutation} from '../../redux-toolkit/features/address/addressApi';
-import { Toast } from "toastify-react-native";
+import {Toast} from 'toastify-react-native';
 
 const AddressDetails = ({item}: {item: Address}) => {
   const dispatch = useAppDispatch();
@@ -23,27 +23,21 @@ const AddressDetails = ({item}: {item: Address}) => {
     }
   }, [dispatch, item, addresses, isLoading]);
 
-
-
-
-
   const deleteHandler = async () => {
-  if (addresses?._id !== item._id) {
-    Toast.warn('Please select the address before deleting.');
-    return;
-  }
+    if (addresses?._id !== item._id) {
+      Toast.warn('Please select the address before deleting.');
+      return;
+    }
 
     try {
       await deleteAddress(item._id);
       dispatch(addAddress({} as Address));
       Toast.success('Address deleted successfully!');
-
     } catch (error) {
       console.error(error);
       Toast.error('Failed to delete address.');
     }
   };
-
 
   return (
     <View className="bg-white p-6 rounded-lg shadow-md mb-4 border border-gray-200">

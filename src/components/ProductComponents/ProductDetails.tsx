@@ -21,6 +21,7 @@ interface ProductDetailsProps {
 }
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({product}) => {
+  
   const dispatch = useAppDispatch();
   const {user} = useAppSelector((state: RootState) => state.auth);
   const {colors, quantity} = useAppSelector((state: RootState) => state.cart);

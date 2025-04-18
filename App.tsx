@@ -21,7 +21,7 @@ const App = () => {
         </GestureHandlerRootView>
       </SafeAreaView>
     </>
-  );
+  )
 };
 
 export default App;

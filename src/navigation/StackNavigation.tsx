@@ -18,10 +18,11 @@ import ShippingAddressScreen from '../screens/ShippingAddressScreen';
 import PaymentMethodScreen from '../screens/PaymentMethodScreen';
 import MyReviewScreen from '../screens/MyReviewScreen';
 import SettingScreen from '../screens/SettingScreen';
-import MyOrderScreen from '../screens/MyOrderScreen';
+// import MyOrderScreen from '../screens/MyOrderScreen';
 import OrderSummaryScreen from '../screens/OrderSummaryScreen';
 import PaymentScreen from '../screens/PaymentScreen';
 import SuccessScreen from '../screens/SuccessScreen';
+import MyOrderScreen from '../screens/myOrderScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -45,7 +46,7 @@ const StackNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={ isAuthenticated ? 'Tabs' : 'Welcome' }
+        initialRouteName={isAuthenticated ? 'Tabs' : 'Welcome'}
         screenOptions={{headerShown: false}}>
         {/* Conditionally render authentication-related screens */}
         {!isAuthenticated && (

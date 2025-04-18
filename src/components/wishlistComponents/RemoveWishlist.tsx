@@ -6,8 +6,8 @@ import {Toast} from 'toastify-react-native';
 
 const RemoveWishlist = ({wishlistId}: {wishlistId: string}) => {
   // console.log('🚀 ~ file: RemoveWishlist.tsx:8 ~ wishlistId:', wishlistId);
-  const [removeItemFromWishlist, {isLoading}] =
-    useRemoveItemFromWishlistMutation();
+  
+  const [removeItemFromWishlist, {isLoading}] = useRemoveItemFromWishlistMutation();
   const RemoveWishlistHandler = async () => {
     try {
       await removeItemFromWishlist({wishlistItemId: wishlistId}).unwrap();
