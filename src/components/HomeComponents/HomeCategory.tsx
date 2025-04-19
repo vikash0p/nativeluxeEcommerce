@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'; // Ionicons
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'; // Material Icons
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'; // Material Community Icons
 import {useAppDispatch} from '../../redux-toolkit/hooks';
-import { setFilter} from '../../redux-toolkit/features/products/productQuerySlice';
+import {setFilter} from '../../redux-toolkit/features/products/productQuerySlice';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigation/navigationTypes';
